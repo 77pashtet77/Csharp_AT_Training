@@ -4,7 +4,7 @@ using System;
 namespace Addressbook_web_tests
 {
     [TestClass]
-    public class UnitTest1
+    public class FiguresTests
     {
         [TestMethod]
         public void TestMethodSquare()
