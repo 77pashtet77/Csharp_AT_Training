@@ -22,22 +22,12 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactsHelper Remove(int v)
+        public ContactsHelper Remove(int v, bool alertAccept)
         {
             manager.Navigator.GoToContactsPage();
             SelectContact(v);
             RemoveContact();
-            driver.SwitchTo().Alert().Accept();
-            ReturnToContactsPage();
-            return this;
-        }
-
-        public ContactsHelper RemoveAndDecline(int v)
-        {
-            manager.Navigator.GoToContactsPage();
-            SelectContact(v);
-            RemoveContact();
-            driver.SwitchTo().Alert().Dismiss();
+            AlertAccept(alertAccept);
             ReturnToContactsPage();
             return this;
         }
@@ -97,6 +87,20 @@ namespace WebAddressbookTests
         public ContactsHelper ReturnToContactsPage()
         {
             driver.FindElement(By.LinkText("home")).Click();
+            return this;
+        }
+
+        public ContactsHelper AlertAccept(bool alertAccept)
+        {
+            if (alertAccept == true)
+            {
+                driver.SwitchTo().Alert().Accept();
+            }
+            else
+            {
+                driver.SwitchTo().Alert().Dismiss();
+
+            }
             return this;
         }
     }

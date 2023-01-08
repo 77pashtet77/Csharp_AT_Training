@@ -12,13 +12,13 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            app.Contacts.Remove(1);
+            app.Contacts.Remove(1, true);
         }
 
         [Test]
         public void DeclineContactRemovalTest()
         {
-            app.Contacts.RemoveAndDecline(1);
+            app.Contacts.Remove(1, false);
         }
     }
 }
