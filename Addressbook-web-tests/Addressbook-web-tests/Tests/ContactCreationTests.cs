@@ -12,10 +12,10 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            ContactData group = new ContactData();
-            group.FirstName = "Pavel";
-            group.LastName = "Murashkov";
-            app.Contacts.Create(group);
+            ContactData contact = new ContactData();
+            contact.FirstName = "Xenia";
+            contact.LastName = "Murashkova";
+            app.Contacts.Create(contact);
         }
     }
 }
