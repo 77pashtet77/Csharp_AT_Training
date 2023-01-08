@@ -20,5 +20,11 @@ namespace WebAddressbookTests
         {
             app.Contacts.Remove(1, false);
         }
+
+        [Test]
+        public void ContactRemovalThroghUpdateTest()
+        {
+            app.Contacts.RemoveContactThroughUpdate(1);
+        }
     }
 }

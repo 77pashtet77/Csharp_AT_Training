@@ -55,6 +55,15 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactsHelper RemoveContactThroughUpdate(int v) 
+        {
+            manager.Navigator.GoToContactsPage();
+            InitContactEdit(v);
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            ReturnToContactsPage();
+            return this;
+        }
+
         public ContactsHelper RemoveContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
