@@ -20,7 +20,7 @@ namespace WebAddressbookTests
         }
 
         [Test]
-        public void EmptyGroupModificationTest()
+        public void GroupModificationTestEmptyData()
         {
             GroupData newData = new GroupData("");
             newData.Header = "";
