@@ -18,5 +18,14 @@ namespace WebAddressbookTests
             newData.Footer = "Note that not every1 has hands growing from shoulders";
             app.Groups.Modify(1, newData);
         }
+
+        [Test]
+        public void EmptyGroupModificationTest()
+        {
+            GroupData newData = new GroupData("");
+            newData.Header = "";
+            newData.Footer = "";
+            app.Groups.Modify(1, newData);
+        }
     }
 }
