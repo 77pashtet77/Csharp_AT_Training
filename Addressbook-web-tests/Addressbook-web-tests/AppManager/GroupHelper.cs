@@ -54,7 +54,7 @@ namespace WebAddressbookTests
 
         public GroupHelper InitGroupCreation()
         {
-            driver.FindElement(By.XPath("//div[@id='content']/form/input[4]")).Click();
+            driver.FindElement(By.Name("new")).Click();
             return this;
         }
 

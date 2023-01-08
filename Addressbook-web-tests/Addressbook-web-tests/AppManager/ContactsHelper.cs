@@ -24,7 +24,7 @@ namespace WebAddressbookTests
 
         public ContactsHelper SubmitNewContact()
         {
-            driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
+            driver.FindElement(By.Name("submit")).Click();
             return this;
         }
 
