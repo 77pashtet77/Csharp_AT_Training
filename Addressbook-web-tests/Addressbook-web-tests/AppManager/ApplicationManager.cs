@@ -20,7 +20,9 @@ namespace WebAddressbookTests
         protected GroupHelper groupHelper;
         protected ContactsHelper contactsHelper;
 
-        public ApplicationManager()
+        private static ApplicationManager instance;
+
+        private ApplicationManager()
         {
             driver = new ChromeDriver();
             baseURL = "http://localhost";
@@ -28,6 +30,15 @@ namespace WebAddressbookTests
             navigator = new NavigationHelper(this, baseURL);
             groupHelper = new GroupHelper(this);
             contactsHelper = new ContactsHelper(this);
+        }
+
+        public static ApplicationManager GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new ApplicationManager();
+            }
+            return instance;
         }
 
         public IWebDriver Driver
