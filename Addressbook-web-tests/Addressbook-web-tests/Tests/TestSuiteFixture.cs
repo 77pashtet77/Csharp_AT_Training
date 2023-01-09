@@ -20,11 +20,5 @@ namespace WebAddressbookTests
             app.Navigator.OpenHomePage();
             app.Auth.Login(new AccountData("admin", "secret"));
         }
-        [TearDown]
-        public void StopApplicationManager() 
-        {
-            ApplicationManager.GetInstance().Auth.Logout();
-            ApplicationManager.GetInstance().Stop();
-        }
     }
 }
