@@ -16,28 +16,32 @@ namespace WebAddressbookTests
         {
         }
 
-        public void Login(AccountData account)
+        public LoginHelper Login(AccountData account)
         {
             if (IsLoggedIn())
             {
                 if (IsLoggedIn(account))
                 {
-                    return;
+                    return this;
                 }
 
                 Logout();
+                return this;
             }
             Type(By.Name("user"), account.Username);
             Type(By.Name("pass"), account.Password);
             driver.FindElement(By.XPath("//input[@value='Login']")).Click();
+            return this;
         }
 
-        public void Logout()
+        public LoginHelper Logout()
         {
             if (IsLoggedIn())
             {
                 driver.FindElement(By.LinkText("Logout")).Click();
+                return this;
             }
+            return this;
         }
         public bool IsLoggedIn()
         {

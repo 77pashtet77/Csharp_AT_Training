@@ -22,7 +22,7 @@ namespace WebAddressbookTests
 
         public NavigationHelper OpenHomePage()
         {
-            if (driver.Url == baseURL + "/addressbook/")
+            if (driver.Url == baseURL + "/addressbook")
             {
                 return this;
             }
@@ -33,6 +33,11 @@ namespace WebAddressbookTests
 
         public NavigationHelper GoToContactsPage()
         {
+            if (driver.Url == baseURL + "/addressbook")
+            {
+                return this;
+            }
+
             driver.FindElement(By.LinkText("home")).Click();
             return this;
         }
@@ -49,6 +54,11 @@ namespace WebAddressbookTests
 
         public NavigationHelper InitContactCreation()
         {
+            if (driver.Url == baseURL + "addressbook/edit.php")
+            {
+                return this;
+            }
+
             driver.FindElement(By.LinkText("add new")).Click();
             return this;
         }

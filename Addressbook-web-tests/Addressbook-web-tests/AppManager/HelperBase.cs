@@ -21,14 +21,16 @@ namespace WebAddressbookTests
             driver = manager.Driver;
         }
 
-        public void Type(By locator, string text)
+        public HelperBase Type(By locator, string text)
         {
             if (text != null)
             {
                 driver.FindElement(locator).Click();
                 driver.FindElement(locator).Clear();
                 driver.FindElement(locator).SendKeys(text);
+                return this;
             }
+            return this;
         }
 
         public bool IsElementPresent(By by)

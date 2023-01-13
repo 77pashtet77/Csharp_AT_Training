@@ -7,6 +7,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using static System.Net.WebRequestMethods;
 
 namespace WebAddressbookTests
 {
@@ -48,6 +49,11 @@ namespace WebAddressbookTests
 
         public GroupHelper ReturnToGroupsPage()
         {
+            if (driver.Url == "http://localhost/" + "addressbook/group.php" && IsElementPresent(By.Name("new")))
+            {
+                return this;
+            }
+
             driver.FindElement(By.LinkText("group page")).Click();
             return this;
         }
