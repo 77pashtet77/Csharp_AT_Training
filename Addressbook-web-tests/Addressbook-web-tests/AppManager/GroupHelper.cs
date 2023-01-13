@@ -78,9 +78,30 @@ namespace WebAddressbookTests
 
         public GroupHelper SelectGroup(int index)
         {
+            CreateGroupIfNoneExists();
             driver.FindElement(By.XPath("//div[@id='content']/form/span[" + index + "]/input")).Click();
             return this;
         }
+
+        public bool IsGroupPresent()
+        {
+            return IsElementPresent(By.Name("selected[]"));
+        }
+
+        public GroupHelper CreateGroupIfNoneExists()
+        {
+            if (!IsGroupPresent())
+            {
+                GroupData group = new GroupData("Dawgs");
+                group.Header = "All dawgs from our block";
+                group.Footer = "Fear teh reaper";
+
+                Create(group);
+                return this;
+            }
+            return this;
+        }
+
 
         public GroupHelper FillGroupForm(GroupData group)
         {
