@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -12,7 +13,16 @@ namespace WebAddressbookTests
         [Test]
         public void GroupRemovalTest()
         {
-            app.Groups.CreateGroupIfNoneExists().Remove(1);
+            app.Groups.CreateGroupIfNoneExists();
+
+            List<GroupData> oldGroups = app.Groups.GetGroupsList();
+
+            app.Groups.Remove(0);
+
+            List<GroupData> newGroups = app.Groups.GetGroupsList();
+
+            oldGroups.RemoveAt(0);
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }

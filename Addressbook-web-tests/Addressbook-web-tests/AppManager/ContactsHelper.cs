@@ -45,7 +45,6 @@ namespace WebAddressbookTests
 
         public ContactsHelper InitContactEdit(int index)
         {
-            index = index + 1;
             driver.FindElement(By.XPath("//tr[" + index + "]/td[8]/a/img")).Click();
             return this;
         }
@@ -86,7 +85,7 @@ namespace WebAddressbookTests
 
         public ContactsHelper SelectContact (int index)
         {
-            driver.FindElement(By.XPath("//table//td[" + index + "]/input")).Click();
+            driver.FindElement(By.XPath("//table//td[" + (index + 1) + "]/input")).Click();
             return this;
         }
 
