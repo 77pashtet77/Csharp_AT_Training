@@ -15,6 +15,7 @@ namespace WebAddressbookTests
             ContactData contact = new ContactData();
             contact.FirstName = "Xenia";
             contact.LastName = "Murashkova";
+
             app.Contacts.Create(contact);
         }
 
@@ -24,6 +25,7 @@ namespace WebAddressbookTests
             ContactData contact = new ContactData();
             contact.FirstName = "";
             contact.LastName = "";
+
             app.Contacts.Create(contact);
         }
     }
