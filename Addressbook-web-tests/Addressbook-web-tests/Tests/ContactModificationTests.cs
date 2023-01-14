@@ -12,10 +12,12 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
+
             ContactData newData = new ContactData();
             newData.FirstName = "Vasiliy";
             newData.LastName = "Pupkin";
-            app.Contacts.Modify(1, newData);
+
+            app.Contacts.CreateContactIfNoneExists().Modify(1, newData);
         }
 
         [Test]
@@ -24,7 +26,8 @@ namespace WebAddressbookTests
             ContactData newData = new ContactData();
             newData.FirstName = "";
             newData.LastName = "";
-            app.Contacts.Modify(1, newData);
+
+            app.Contacts.CreateContactIfNoneExists().Modify(1, newData);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace WebAddressbookTests
             GroupData newData = new GroupData("Plumbers");
             newData.Header = null;
             newData.Footer = null;
-            app.Groups.Modify(1, newData);
+            app.Groups.CreateGroupIfNoneExists().Modify(1, newData);
         }
 
         [Test]
@@ -25,7 +25,7 @@ namespace WebAddressbookTests
             GroupData newData = new GroupData("");
             newData.Header = "";
             newData.Footer = "";
-            app.Groups.Modify(1, newData);
+            app.Groups.CreateGroupIfNoneExists().Modify(1, newData);
         }
     }
 }

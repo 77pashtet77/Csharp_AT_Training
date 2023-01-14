@@ -78,7 +78,6 @@ namespace WebAddressbookTests
 
         public GroupHelper SelectGroup(int index)
         {
-            CreateGroupIfNoneExists();
             driver.FindElement(By.XPath("//div[@id='content']/form/span[" + index + "]/input")).Click();
             return this;
         }
@@ -90,6 +89,8 @@ namespace WebAddressbookTests
 
         public GroupHelper CreateGroupIfNoneExists()
         {
+            manager.Navigator.GoToGroupsPage();
+
             if (!IsGroupPresent())
             {
                 GroupData group = new GroupData("Dawgs");
@@ -97,6 +98,7 @@ namespace WebAddressbookTests
                 group.Footer = "Fear teh reaper";
 
                 Create(group);
+                ReturnToGroupsPage();
                 return this;
             }
             return this;

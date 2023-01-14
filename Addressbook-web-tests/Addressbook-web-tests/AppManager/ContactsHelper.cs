@@ -45,7 +45,6 @@ namespace WebAddressbookTests
 
         public ContactsHelper InitContactEdit(int index)
         {
-            CreateContactIfNoneExists();
             index = index + 1;
             driver.FindElement(By.XPath("//tr[" + index + "]/td[8]/a/img")).Click();
             return this;
@@ -87,7 +86,6 @@ namespace WebAddressbookTests
 
         public ContactsHelper SelectContact (int index)
         {
-            CreateContactIfNoneExists();
             driver.FindElement(By.XPath("//table//td[" + index + "]/input")).Click();
             return this;
         }
@@ -99,6 +97,8 @@ namespace WebAddressbookTests
 
         public ContactsHelper CreateContactIfNoneExists()
         {
+            manager.Navigator.GoToContactsPage();
+
             if (! IsContactPresent()) 
             {
                 ContactData contact = new ContactData();
