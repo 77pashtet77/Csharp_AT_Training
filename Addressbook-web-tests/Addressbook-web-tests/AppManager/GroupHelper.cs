@@ -23,7 +23,6 @@ namespace WebAddressbookTests
             InitGroupCreation();
             FillGroupForm(group);
             SubmitGroupCreation();
-            ReturnToGroupsPage();
             return this;
         }
 
@@ -32,7 +31,6 @@ namespace WebAddressbookTests
             manager.Navigator.GoToGroupsPage();
             SelectGroup(v);
             RemoveGroup();
-            ReturnToGroupsPage();
             return this;
         }
 
@@ -43,7 +41,6 @@ namespace WebAddressbookTests
             InitGroupModification();
             FillGroupForm(newData);
             SubmitGroupModification();
-            ReturnToGroupsPage();
             return this;
         }
 
@@ -98,7 +95,6 @@ namespace WebAddressbookTests
                 group.Footer = "Fear teh reaper";
 
                 Create(group);
-                ReturnToGroupsPage();
                 return this;
             }
             return this;

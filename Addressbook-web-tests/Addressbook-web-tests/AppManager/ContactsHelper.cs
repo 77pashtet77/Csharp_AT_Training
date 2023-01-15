@@ -30,7 +30,6 @@ namespace WebAddressbookTests
             SelectContact(v);
             RemoveContact();
             AlertAccept(alertAccept);
-            ReturnToContactsPage();
             return this;
         }
 
@@ -40,13 +39,12 @@ namespace WebAddressbookTests
             InitContactEdit(v);
             FillContactForm(contact);
             UpdateContact();
-            ReturnToContactsPage();
             return this;
         }
 
         public ContactsHelper InitContactEdit(int index)
         {
-            driver.FindElement(By.XPath("//tr[" + (index + 1) + "]/td[8]/a/img")).Click();
+            driver.FindElement(By.XPath("//table//tr[" + (index + 2) + "]/td[8]/a/img")).Click();
             return this;
         }
 
@@ -61,7 +59,6 @@ namespace WebAddressbookTests
             manager.Navigator.GoToContactsPage();
             InitContactEdit(v);
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
-            ReturnToContactsPage();
             return this;
         }
 
@@ -86,7 +83,7 @@ namespace WebAddressbookTests
 
         public ContactsHelper SelectContact (int index)
         {
-            driver.FindElement(By.XPath("//table//td[" + index + "]/input")).Click();
+            driver.FindElement(By.XPath("//table//tr[" + (index + 2) + "]/td[1]/input")).Click();
             return this;
         }
 
@@ -105,15 +102,8 @@ namespace WebAddressbookTests
                 contact.FirstName = "Good";
                 contact.LastName = "Doggie";
                 Create(contact);
-                ReturnToContactsPage();
                 return this;
             }
-            return this;
-        }
-
-        public ContactsHelper ReturnToContactsPage()
-        {
-            driver.FindElement(By.LinkText("home")).Click();
             return this;
         }
 

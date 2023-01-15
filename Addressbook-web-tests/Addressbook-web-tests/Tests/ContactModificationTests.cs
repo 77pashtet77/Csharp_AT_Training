@@ -17,7 +17,7 @@ namespace WebAddressbookTests
             newData.FirstName = "Vasiliy";
             newData.LastName = "Pupkin";
 
-            app.Contacts.CreateContactIfNoneExists().Modify(1, newData);
+            app.Contacts.CreateContactIfNoneExists().Modify(0, newData);
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace WebAddressbookTests
             newData.FirstName = "";
             newData.LastName = "";
 
-            app.Contacts.CreateContactIfNoneExists().Modify(1, newData);
+            app.Contacts.CreateContactIfNoneExists().Modify(0, newData);
         }
     }
 }

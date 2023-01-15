@@ -12,19 +12,19 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            app.Contacts.CreateContactIfNoneExists().Remove(1, true);
+            app.Contacts.CreateContactIfNoneExists().Remove(0, true);
         }
 
         [Test]
         public void DeclineContactRemovalTest()
         {
-            app.Contacts.CreateContactIfNoneExists().Remove(1, false);
+            app.Contacts.CreateContactIfNoneExists().Remove(0, false);
         }
 
         [Test]
         public void ContactRemovalThroghUpdateTest()
         {
-            app.Contacts.CreateContactIfNoneExists().RemoveContactThroughEdit(1);
+            app.Contacts.CreateContactIfNoneExists().RemoveContactThroughEdit(0);
         }
     }
 }
