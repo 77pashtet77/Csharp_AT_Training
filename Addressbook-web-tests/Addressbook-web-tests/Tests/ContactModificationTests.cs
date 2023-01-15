@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -15,7 +16,18 @@ namespace WebAddressbookTests
 
             ContactData newData = new ContactData("Vasiliy", "Pupkin");
 
-            app.Contacts.CreateContactIfNoneExists().Modify(0, newData);
+            app.Contacts.CreateContactIfNoneExists();
+
+            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+
+            app.Contacts.Modify(0, newData);
+
+            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            oldContacts[0].FirstName = newData.FirstName;
+            oldContacts[0].LastName = newData.LastName;
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
 
         [Test]
@@ -23,7 +35,18 @@ namespace WebAddressbookTests
         {
             ContactData newData = new ContactData("", "");
 
-            app.Contacts.CreateContactIfNoneExists().Modify(0, newData);
+            app.Contacts.CreateContactIfNoneExists();
+
+            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+
+            app.Contacts.Modify(0, newData);
+
+            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            oldContacts[0].FirstName = newData.FirstName;
+            oldContacts[0].LastName = newData.LastName;
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

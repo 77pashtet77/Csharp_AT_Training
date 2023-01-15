@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -12,19 +13,43 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            app.Contacts.CreateContactIfNoneExists().Remove(0, true);
+            app.Contacts.CreateContactIfNoneExists();
+
+            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+
+            app.Contacts.Remove(0, true);
+
+            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            oldContacts.RemoveAt(0);
+            Assert.AreEqual(oldContacts, newContacts);
         }
 
         [Test]
         public void DeclineContactRemovalTest()
         {
-            app.Contacts.CreateContactIfNoneExists().Remove(0, false);
+            app.Contacts.CreateContactIfNoneExists();
+
+            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+
+            app.Contacts.Remove(0, false);
+
+            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            oldContacts.RemoveAt(0);
+            Assert.AreEqual(oldContacts, newContacts);
         }
 
         [Test]
         public void ContactRemovalThroghUpdateTest()
         {
-            app.Contacts.CreateContactIfNoneExists().RemoveContactThroughEdit(0);
+            app.Contacts.CreateContactIfNoneExists();
+
+            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+
+            app.Contacts.RemoveContactThroughEdit(0);
+
+            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            oldContacts.RemoveAt(0);
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }
