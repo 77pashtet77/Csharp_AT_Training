@@ -13,9 +13,7 @@ namespace WebAddressbookTests
         public void ContactModificationTest()
         {
 
-            ContactData newData = new ContactData();
-            newData.FirstName = "Vasiliy";
-            newData.LastName = "Pupkin";
+            ContactData newData = new ContactData("Vasiliy", "Pupkin");
 
             app.Contacts.CreateContactIfNoneExists().Modify(0, newData);
         }
@@ -23,9 +21,7 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTestEmptyData()
         {
-            ContactData newData = new ContactData();
-            newData.FirstName = "";
-            newData.LastName = "";
+            ContactData newData = new ContactData("", "");
 
             app.Contacts.CreateContactIfNoneExists().Modify(0, newData);
         }

@@ -98,9 +98,7 @@ namespace WebAddressbookTests
 
             if (! IsContactPresent()) 
             {
-                ContactData contact = new ContactData();
-                contact.FirstName = "Good";
-                contact.LastName = "Doggie";
+                ContactData contact = new ContactData("Good", "Doggie");
                 Create(contact);
                 return this;
             }

@@ -12,9 +12,7 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            ContactData contact = new ContactData();
-            contact.FirstName = "Xenia";
-            contact.LastName = "Murashkova";
+            ContactData contact = new ContactData("Xenia", "Murashkova");
 
             app.Contacts.Create(contact);
         }
@@ -22,9 +20,7 @@ namespace WebAddressbookTests
         [Test]
         public void EmptyContactCreationTest()
         {
-            ContactData contact = new ContactData();
-            contact.FirstName = "";
-            contact.LastName = "";
+            ContactData contact = new ContactData("", "");
 
             app.Contacts.Create(contact);
         }
