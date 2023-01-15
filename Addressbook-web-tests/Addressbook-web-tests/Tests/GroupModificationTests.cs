@@ -16,7 +16,18 @@ namespace WebAddressbookTests
             GroupData newData = new GroupData("Plumbers");
             newData.Header = null;
             newData.Footer = null;
-            app.Groups.CreateGroupIfNoneExists().Modify(0, newData);
+
+            app.Groups.CreateGroupIfNoneExists();
+
+            List<GroupData> oldGroups = app.Groups.GetGroupsList();
+
+            app.Groups.Modify(0, newData);
+
+            List<GroupData> newGroups = app.Groups.GetGroupsList();
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
 
         [Test]
@@ -25,7 +36,17 @@ namespace WebAddressbookTests
             GroupData newData = new GroupData("");
             newData.Header = "";
             newData.Footer = "";
-            app.Groups.CreateGroupIfNoneExists().Modify(0, newData);
+            app.Groups.CreateGroupIfNoneExists();
+
+            List<GroupData> oldGroups = app.Groups.GetGroupsList();
+
+            app.Groups.Modify(0, newData);
+
+            List<GroupData> newGroups = app.Groups.GetGroupsList();
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }
