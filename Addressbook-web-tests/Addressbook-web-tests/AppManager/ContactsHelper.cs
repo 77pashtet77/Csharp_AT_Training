@@ -126,9 +126,11 @@ namespace WebAddressbookTests
             List<ContactData> contacts = new List<ContactData>();
             manager.Navigator.GoToContactsPage();
             ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+            int index = 1;
             foreach (IWebElement element in elements)
             {
-                contacts.Add(new ContactData(element.FindElement(By.XPath("//table//td[2]")).Text, element.FindElement(By.XPath("//table//td[3]")).Text));
+                index++;
+                contacts.Add(new ContactData(element.FindElement(By.XPath("//table//tr[" + index + "]//td[2]")).Text, element.FindElement(By.XPath("//table//tr[" + index + "]//td[3]")).Text));
             }
             return contacts;
         }
