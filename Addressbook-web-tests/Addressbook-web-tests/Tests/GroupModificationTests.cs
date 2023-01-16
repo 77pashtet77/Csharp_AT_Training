@@ -23,6 +23,11 @@ namespace WebAddressbookTests
 
             app.Groups.Modify(0, newData);
 
+            //Hashing
+            //Remove code below for stable tests
+            Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupsCount());
+            //remove
+
             List<GroupData> newGroups = app.Groups.GetGroupsList();
             oldGroups[0].Name = newData.Name;
             oldGroups.Sort();
@@ -41,6 +46,11 @@ namespace WebAddressbookTests
             List<GroupData> oldGroups = app.Groups.GetGroupsList();
 
             app.Groups.Modify(0, newData);
+
+            //Hashing
+            //Remove code below for stable tests
+            Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupsCount());
+            //remove
 
             List<GroupData> newGroups = app.Groups.GetGroupsList();
             oldGroups[0].Name = newData.Name;

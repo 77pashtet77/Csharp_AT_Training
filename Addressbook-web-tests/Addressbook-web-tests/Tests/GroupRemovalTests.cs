@@ -19,6 +19,11 @@ namespace WebAddressbookTests
 
             app.Groups.Remove(0);
 
+            //Hashing
+            //Remove code below for stable tests
+            Assert.AreEqual(oldGroups.Count - 1, app.Groups.GetGroupsCount());
+            //remove
+
             List<GroupData> newGroups = app.Groups.GetGroupsList();
 
             oldGroups.RemoveAt(0);
