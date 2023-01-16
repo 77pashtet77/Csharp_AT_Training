@@ -150,6 +150,7 @@ namespace WebAddressbookTests
         //Remove code below for stable tests
         public int GetGroupsCount()
         {
+            manager.Navigator.GoToGroupsPage();
             return driver.FindElements(By.CssSelector("span.group")).Count;
         }
         //Remove
