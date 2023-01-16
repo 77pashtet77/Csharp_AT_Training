@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace WebAddressbookTests
 {
-    public class ContactData
+    public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string firstName;
         private string lastName;
 
-        public ContactData(string firstName, string lastName)
+        public ContactData(string lastName, string firstName)
         {
-            this.firstName = firstName;
             this.lastName = lastName;
+            this.firstName = firstName;
         }
 
         public bool Equals(ContactData other)
@@ -27,35 +27,34 @@ namespace WebAddressbookTests
             {
                 return true;
             }
-            return FirstName == other.FirstName && LastName == other.LastName;
+            return (LastName == other.LastName) && (FirstName == other.FirstName);
         }
 
         public override int GetHashCode()
         {
-            return FirstName.GetHashCode() ^ LastName.GetHashCode();
+            return LastName.GetHashCode() ^ FirstName.GetHashCode();
         }
 
         public override string ToString()
         {
-            return "Firstname=" + FirstName + "/nLastname=" + LastName;
+            return "Lastname=" + LastName + " || Firstname=" + FirstName;
         }
 
         public int CompareTo(ContactData other)
         {
-            var result = FirstName.CompareTo(other.FirstName);
             if (Object.ReferenceEquals(other, null))
             {
                 return 1;
             }
-            if (result == 0)
+            if (LastName.CompareTo(other.LastName) != 0)
             {
-                result = LastName.CompareTo(other.LastName);
+                return LastName.CompareTo(other.LastName);
             }
-            return result;
+            return FirstName.CompareTo(other.FirstName);
         }
 
 
-        public string FirstName { get { return firstName; } set { firstName = value; } }
         public string LastName { get { return lastName; } set { lastName = value; } }
+        public string FirstName { get { return firstName; } set { firstName = value; } }
     }
 }

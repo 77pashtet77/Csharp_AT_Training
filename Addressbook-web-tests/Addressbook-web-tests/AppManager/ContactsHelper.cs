@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -122,12 +123,12 @@ namespace WebAddressbookTests
 
         public List<ContactData> GetContactsList()
         {
-            List<ContactData> contacts = new List<ContactData>(); 
+            List<ContactData> contacts = new List<ContactData>();
             manager.Navigator.GoToContactsPage();
             ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
             foreach (IWebElement element in elements)
             {
-                contacts.Add(new ContactData(element.Text, element.Text));
+                contacts.Add(new ContactData(element.FindElement(By.XPath("//table//td[2]")).Text, element.FindElement(By.XPath("//table//td[3]")).Text));
             }
             return contacts;
         }
