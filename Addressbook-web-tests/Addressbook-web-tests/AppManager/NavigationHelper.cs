@@ -22,18 +22,18 @@ namespace WebAddressbookTests
 
         public NavigationHelper OpenHomePage()
         {
-            if (driver.Url == baseURL + "addressbook")
+            if (driver.Url == baseURL + "addressbook/")
             {
                 return this;
             }
 
-            driver.Navigate().GoToUrl(baseURL + "addressbook");
+            driver.Navigate().GoToUrl(baseURL + "addressbook/");
             return this;
         }
 
         public NavigationHelper GoToContactsPage()
         {
-            if (driver.Url == baseURL + "addressbook")
+            if (driver.Url == baseURL + "addressbook/")
             {
                 return this;
             }

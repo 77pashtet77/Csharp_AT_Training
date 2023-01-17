@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -20,8 +19,15 @@ namespace WebAddressbookTests
 
             app.Contacts.Create(contact);
 
+            //Hashing
+            //Remove code below for stable tests
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactsCount());
+            //remove
+
             List<ContactData> newContacts = app.Contacts.GetContactsList();
+            //adding the created contact to the old list
             oldContacts.Add(contact);
+            //sorting both lists to match each other
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
@@ -36,8 +42,15 @@ namespace WebAddressbookTests
 
             app.Contacts.Create(contact);
 
+            //Hashing
+            //Remove code below for stable tests
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactsCount());
+            //remove
+
             List<ContactData> newContacts = app.Contacts.GetContactsList();
+            //adding the created contact to the old list
             oldContacts.Add(contact);
+            //sorting both lists to match each other
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);

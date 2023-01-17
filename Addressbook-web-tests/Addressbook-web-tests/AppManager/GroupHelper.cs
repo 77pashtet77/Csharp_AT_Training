@@ -128,12 +128,15 @@ namespace WebAddressbookTests
 
         public List<GroupData> GetGroupsList()
         {
+            //cache should be removed after all create/modify/remove operations
             if (groupCache == null)
             {
                 groupCache = new List<GroupData>();
 
                 manager.Navigator.GoToGroupsPage();
+                //filling elements massive with all groups listed
                 ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+                //filling list with text for each element found above
                 foreach (IWebElement element in elements)
                 {
                     groupCache.Add(new GroupData(element.Text) {

@@ -32,6 +32,7 @@ namespace WebAddressbookTests
             oldGroups.RemoveAt(0);
             Assert.AreEqual(oldGroups, newGroups);
 
+            //checking if there is no element with same ID in the list
             foreach (GroupData group in newGroups)
             {
                 Assert.AreNotEqual(group.Id, toBeRemoved.Id);

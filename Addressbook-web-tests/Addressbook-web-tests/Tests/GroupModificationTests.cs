@@ -21,6 +21,7 @@ namespace WebAddressbookTests
 
             List<GroupData> oldGroups = app.Groups.GetGroupsList();
 
+            //saving old groups list state before modification and sorting
             GroupData oldData = oldGroups[0];
 
             app.Groups.Modify(0, newData);
@@ -36,11 +37,12 @@ namespace WebAddressbookTests
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
 
+            //checking if exact group was edited
             foreach (GroupData group in newGroups)
             {
                 if (group.Id == oldData.Id)
                 {
-                    newData.Name = group.Name;
+                    Assert.AreEqual(newData.Name, group.Name);
                 }
             }
         }
@@ -55,6 +57,9 @@ namespace WebAddressbookTests
 
             List<GroupData> oldGroups = app.Groups.GetGroupsList();
 
+            //saving old groups list state before modification and sorting
+            GroupData oldData = oldGroups[0];
+
             app.Groups.Modify(0, newData);
 
             //Hashing
@@ -67,6 +72,15 @@ namespace WebAddressbookTests
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
+
+            //checking if exact group was edited
+            foreach (GroupData group in newGroups)
+            {
+                if (group.Id == oldData.Id)
+                {
+                    Assert.AreEqual(newData.Name, group.Name);
+                }
+            }
         }
     }
 }
