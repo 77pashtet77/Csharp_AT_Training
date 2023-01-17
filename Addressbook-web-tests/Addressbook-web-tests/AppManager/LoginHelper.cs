@@ -51,7 +51,7 @@ namespace WebAddressbookTests
         {
             return IsLoggedIn()
                 && driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text 
-                    == System.String.Format("(${0})", account.Username);
+                    == "(" + account.Username + ")";
         }
     }
 }
