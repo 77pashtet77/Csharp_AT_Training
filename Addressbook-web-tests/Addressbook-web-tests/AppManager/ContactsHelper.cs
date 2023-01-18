@@ -57,7 +57,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactsHelper RemoveContactThroughEdit(int v) 
+        public ContactsHelper RemoveContactThroughEdit(int v)
         {
             manager.Navigator.GoToContactsPage();
             InitContactEdit(v);
@@ -87,7 +87,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactsHelper SelectContact (int index)
+        public ContactsHelper SelectContact(int index)
         {
             driver.FindElement(By.XPath("//table//tr[" + (index + 2) + "]/td[1]/input")).Click();
             return this;
@@ -102,7 +102,7 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToContactsPage();
 
-            if (! IsContactPresent()) 
+            if (!IsContactPresent())
             {
                 ContactData contact = new ContactData("Good", "Doggie");
                 Create(contact);
@@ -157,5 +157,79 @@ namespace WebAddressbookTests
             return driver.FindElements(By.Name("entry")).Count;
         }
         //Remove
+
+        public ContactData GetContactInformationFromTable(int index)
+        {
+            manager.Navigator.GoToContactsPage();
+
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"));
+
+            string firstName = cells[2].Text;
+            string lastName = cells[1].Text;
+            string address = cells[3].Text;
+            string allPhones = cells[5].Text;
+
+            return new ContactData(lastName, firstName)
+            {
+                Address = address,
+                AllPhones = allPhones
+            };
+        }
+
+        public ContactData GetContactInformationFromForm(int index)
+        {
+            manager.Navigator.GoToContactsPage();
+            InitContactEdit(index);
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string middleName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
+            string nickname = driver.FindElement(By.Name("nickname")).GetAttribute("value");
+
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string company = driver.FindElement(By.Name("company")).GetAttribute("value");
+            string title = driver.FindElement(By.Name("title")).GetAttribute("value");
+
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            string faxPhone = driver.FindElement(By.Name("fax")).GetAttribute("value");
+
+            string email1 = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+            string birthday = driver.FindElement(By.XPath("//select[@name='bday']/option[1]")).GetAttribute("value") + "." 
+                + driver.FindElement(By.XPath("//select[@name='bmonth']/option[1]")).GetAttribute("value") + "."
+                + driver.FindElement(By.Name("byear")).GetAttribute("value");
+            string anniversary = driver.FindElement(By.XPath("//select[@name='aday']/option[1]")).GetAttribute("value") + "."
+                + driver.FindElement(By.XPath("//select[@name='amonth']/option[1]")).GetAttribute("value") + "."
+                + driver.FindElement(By.Name("ayear")).GetAttribute("value");
+
+            string secondAddress = driver.FindElement(By.Name("address2")).GetAttribute("value");
+            string secondHomePhone = driver.FindElement(By.Name("phone2")).GetAttribute("value");
+            string notes = driver.FindElement(By.Name("notes")).GetAttribute("value");
+
+            return new ContactData(lastName, firstName)
+            {
+                MiddleName = middleName, 
+                Nickname = nickname, 
+                Address = address,
+                Company = company, 
+                Title = title, 
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone,
+                FaxPhone = faxPhone, 
+                Email1 = email1,
+                Email2 = email2,
+                Email3 = email3,
+                Birthday = birthday, 
+                Anniversary = anniversary, 
+                SecondAddress = secondAddress, 
+                SecondHomePhone = secondHomePhone, 
+                Notes = notes
+            };
+        }
     }
 }

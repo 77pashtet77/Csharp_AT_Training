@@ -44,10 +44,12 @@ namespace WebAddressbookTests
             }
             return this;
         }
+
         public bool IsLoggedIn()
         {
             return IsElementPresent(By.Name("logout"));
         }
+
         public bool IsLoggedIn(AccountData account)
         {
             return IsLoggedIn()
