@@ -139,10 +139,25 @@ namespace WebAddressbookTests
                 //filling list with text for each element found above
                 foreach (IWebElement element in elements)
                 {
-                    groupCache.Add(new GroupData(element.Text) {
+                    groupCache.Add(new GroupData(null) {
                         //adding Id property for each found element
                         Id = element.FindElement(By.TagName("input")).GetAttribute("value")
                     });
+                }
+
+                string allGroupNames = driver.FindElement(By.CssSelector("div#content form")).Text;
+                string[] parts = allGroupNames.Split('\n');
+                int shift = groupCache.Count - parts.Length;
+                for (int i = 0; i < groupCache.Count; i++)
+                {
+                    if (i < shift)
+                    {
+                        groupCache[i].Name = "";
+                    }
+                    else
+                    {
+                        groupCache[i].Name = parts[i - shift].Trim();
+                    }
                 }
             }
 
