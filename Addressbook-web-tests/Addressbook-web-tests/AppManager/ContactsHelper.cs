@@ -136,11 +136,9 @@ namespace WebAddressbookTests
                 manager.Navigator.GoToContactsPage();
 
                 ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
-                int index = 1;
                 foreach (IWebElement element in elements)
                 {
-                    index++;
-                    contactCache.Add(new ContactData(element.FindElement(By.XPath("//table//tr[" + index + "]//td[2]")).Text, element.FindElement(By.XPath("//table//tr[" + index + "]//td[3]")).Text)
+                    contactCache.Add(new ContactData(element.FindElement(By.XPath(".//td[2]")).Text, element.FindElement(By.XPath(".//td[3]")).Text)
                     {
                         //adding Id property for each found element
                         Id = element.FindElement(By.TagName("input")).GetAttribute("id")
