@@ -16,11 +16,10 @@ namespace WebAddressbookTests
             ContactData infoFromTable = app.Contacts.GetContactInformationFromTable(0);
             ContactData infoFromForm = app.Contacts.GetContactInformationFromForm(0);
 
-            //verifications
             Assert.AreEqual(infoFromTable, infoFromForm);
             Assert.AreEqual(infoFromTable.Address, infoFromForm.Address);
             Assert.AreEqual(infoFromTable.AllPhones, infoFromForm.AllPhones);
-
+            Assert.AreEqual(infoFromTable.AllEmails, infoFromForm.AllEmails);
         }
     }
 }

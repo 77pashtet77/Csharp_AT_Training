@@ -169,11 +169,13 @@ namespace WebAddressbookTests
             string lastName = cells[1].Text;
             string address = cells[3].Text;
             string allPhones = cells[5].Text;
+            string allEmails = cells[4].Text;
 
             return new ContactData(lastName, firstName)
             {
                 Address = address,
-                AllPhones = allPhones
+                AllPhones = allPhones,
+                AllEmails = allEmails
             };
         }
 
