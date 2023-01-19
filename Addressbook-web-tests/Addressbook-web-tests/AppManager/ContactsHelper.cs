@@ -232,15 +232,11 @@ namespace WebAddressbookTests
             };
         }
 
-        //edit method below when doing homework
         public int GetNumberOfSearchResults()
         {
             manager.Navigator.GoToContactsPage();
 
-            string text = driver.FindElement(By.TagName("label")).Text;
-            Match m = new Regex(@"\d+").Match(text);
-            return Int32.Parse(m.Value);
+            return Int32.Parse(driver.FindElement(By.Id("search_count")).Text);
         }
-        //
     }
 }
