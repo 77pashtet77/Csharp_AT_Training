@@ -50,6 +50,19 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactsHelper OpenContactDetails(int index)
+        {
+            driver.FindElement(By.XPath("//table//tr[" + (index + 2) + "]/td[7]/a/img")).Click();
+            return this;
+        }
+
+        public string GetContactDetails(int index)
+        {
+            OpenContactDetails(index);
+            return Regex.Replace(driver.FindElement(By.Id("content")).Text, @"[\r\n\s\.]", "");
+        }
+
+
         public ContactsHelper UpdateContact()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -232,6 +245,17 @@ namespace WebAddressbookTests
                 SecondHomePhone = secondHomePhone, 
                 Notes = notes
             };
+        }
+
+        public string GetFormattedDetailsFromEditForm(int index)
+        {
+            ContactData infoFromForm = GetContactInformationFromForm(index);
+            string textFromForm = infoFromForm.FirstName + infoFromForm.MiddleName + infoFromForm.LastName + infoFromForm.Nickname
+                + infoFromForm.Title + infoFromForm.Company + infoFromForm.Address + "H:" + infoFromForm.HomePhone
+                + "M:" + infoFromForm.MobilePhone + "W:" + infoFromForm.WorkPhone + infoFromForm.Email1 + infoFromForm.Email2
+                + infoFromForm.Email3 + "Birthday" + infoFromForm.Birthday + "Anniversary" + infoFromForm.Anniversary
+                + infoFromForm.SecondAddress + infoFromForm.Notes;
+            return Regex.Replace(textFromForm, @"[\s.]", "");
         }
 
         public int GetNumberOfSearchResults()
