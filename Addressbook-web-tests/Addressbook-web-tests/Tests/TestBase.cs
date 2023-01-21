@@ -24,7 +24,25 @@ namespace WebAddressbookTests
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < l; i++)
             {
-                builder.Append(Convert.ToChar(32 + Convert.ToInt32(rnd.NextDouble() * 223)));
+                builder.Append(Convert.ToChar(32 + Convert.ToInt32(rnd.NextDouble() * 65)));
+            }
+            return StringCaseRandomizer(builder.ToString());
+        }
+
+        public static string StringCaseRandomizer(string textToTweakCase)
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < textToTweakCase.Length; i++)
+            {
+                int l = Convert.ToInt32(rnd.NextDouble() * 2);
+                if (l > 1)
+                {
+                    builder.Append(textToTweakCase.Substring(i, 1).ToLower());
+                }
+                else
+                {
+                    builder.Append(textToTweakCase.Substring(i, 1).ToUpper());
+                }
             }
             return builder.ToString();
         }
