@@ -59,7 +59,9 @@ namespace WebAddressbookTests
         public string GetContactDetails(int index)
         {
             OpenContactDetails(index);
-            return Regex.Replace(driver.FindElement(By.Id("content")).Text, @"[\r\n\s\.]", "");
+            return Regex.Replace(driver.FindElement(By.Id("content")).Text, @"[\r\n\s\.]", "")
+                .Replace("H:", "").Replace("M:", "").Replace("W:", "").Replace("P:", "").Replace("F:", "")
+                .Replace("Birthday", "").Replace("Anniversary", "");
         }
 
 
@@ -214,12 +216,20 @@ namespace WebAddressbookTests
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
-            string birthday = driver.FindElement(By.XPath("//select[@name='bday']/option[1]")).GetAttribute("value") + "." 
-                + driver.FindElement(By.XPath("//select[@name='bmonth']/option[1]")).GetAttribute("value") + "."
+            string birthday = driver.FindElement(By.XPath("//select[@name='bday']/option[1]")).GetAttribute("value")
+                + driver.FindElement(By.XPath("//select[@name='bmonth']/option[1]")).GetAttribute("value")
                 + driver.FindElement(By.Name("byear")).GetAttribute("value");
-            string anniversary = driver.FindElement(By.XPath("//select[@name='aday']/option[1]")).GetAttribute("value") + "."
-                + driver.FindElement(By.XPath("//select[@name='amonth']/option[1]")).GetAttribute("value") + "."
+            if (birthday == "0-")
+            {
+                birthday = null;
+            }
+            string anniversary = driver.FindElement(By.XPath("//select[@name='aday']/option[1]")).GetAttribute("value")
+                + driver.FindElement(By.XPath("//select[@name='amonth']/option[1]")).GetAttribute("value")
                 + driver.FindElement(By.Name("ayear")).GetAttribute("value");
+            if (anniversary == "0-")
+            {
+                anniversary = null;
+            }
 
             string secondAddress = driver.FindElement(By.Name("address2")).GetAttribute("value");
             string secondHomePhone = driver.FindElement(By.Name("phone2")).GetAttribute("value");
@@ -251,10 +261,9 @@ namespace WebAddressbookTests
         {
             ContactData infoFromForm = GetContactInformationFromForm(index);
             string textFromForm = infoFromForm.FirstName + infoFromForm.MiddleName + infoFromForm.LastName + infoFromForm.Nickname
-                + infoFromForm.Title + infoFromForm.Company + infoFromForm.Address + "H:" + infoFromForm.HomePhone
-                + "M:" + infoFromForm.MobilePhone + "W:" + infoFromForm.WorkPhone + infoFromForm.Email1 + infoFromForm.Email2
-                + infoFromForm.Email3 + "Birthday" + infoFromForm.Birthday + "Anniversary" + infoFromForm.Anniversary
-                + infoFromForm.SecondAddress + infoFromForm.Notes;
+                + infoFromForm.Title + infoFromForm.Company + infoFromForm.Address + infoFromForm.HomePhone + infoFromForm.MobilePhone 
+                + infoFromForm.WorkPhone + infoFromForm.FaxPhone + infoFromForm.Email1 + infoFromForm.Email2 + infoFromForm.Email3 
+                + infoFromForm.Birthday + infoFromForm.Anniversary + infoFromForm.SecondAddress + infoFromForm.SecondHomePhone + infoFromForm.Notes;
             return Regex.Replace(textFromForm, @"[\s.]", "");
         }
 
