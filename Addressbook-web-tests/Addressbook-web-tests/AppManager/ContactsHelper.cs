@@ -99,6 +99,7 @@ namespace WebAddressbookTests
         {
             Type(By.Name("firstname"), contact.FirstName);
             Type(By.Name("lastname"), contact.LastName);
+            //Add additional fields for full contact data filling
             return this;
         }
 
