@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Linq;
 using Newtonsoft.Json;
 //install excel 2007 and uncomment below for excel test data generation/reading
 //using Excel = Microsoft.Office.Interop.Excel;
@@ -84,7 +85,7 @@ namespace WebAddressbookTests
         }
         */
 
-            [Test, TestCaseSource("GroupDataFromJsonFile")]
+        [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTest(GroupData group)
         {
             List<GroupData> oldGroups = app.Groups.GetGroupsList();
@@ -101,6 +102,22 @@ namespace WebAddressbookTests
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
+        }
+
+        [Test]
+        public void TestDbConnectivity()
+        {
+            DateTime start = DateTime.Now;
+            List<GroupData> fromUi = app.Groups.GetGroupsList();
+            DateTime finish = DateTime.Now;
+            Console.WriteLine(finish.Subtract(start));
+
+            start = DateTime.Now;
+            AddressBookDB db = new AddressBookDB();
+            List<GroupData> fromDb = (from g in db.Groups select g).ToList();
+            db.Close();
+            finish = DateTime.Now;
+            Console.WriteLine(finish.Subtract(start));
         }
     }
 }
