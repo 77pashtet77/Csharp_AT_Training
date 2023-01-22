@@ -113,9 +113,7 @@ namespace WebAddressbookTests
             Console.WriteLine(finish.Subtract(start));
 
             start = DateTime.Now;
-            AddressBookDB db = new AddressBookDB();
-            List<GroupData> fromDb = (from g in db.Groups select g).ToList();
-            db.Close();
+            List<GroupData> fromDb = GroupData.GetAll();
             finish = DateTime.Now;
             Console.WriteLine(finish.Subtract(start));
         }
