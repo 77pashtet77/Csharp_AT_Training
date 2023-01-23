@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing.Text;
 using System.Security.Principal;
 using System.Text;
@@ -217,19 +218,36 @@ namespace WebAddressbookTests
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
-            string birthday = driver.FindElement(By.XPath("//select[@name='bday']/option[1]")).GetAttribute("value")
-                + driver.FindElement(By.XPath("//select[@name='bmonth']/option[1]")).GetAttribute("value")
-                + driver.FindElement(By.Name("byear")).GetAttribute("value");
-            if (birthday == "0-")
+            string birthdayDay = driver.FindElement(By.XPath("//select[@name='bday']/option[1]")).GetAttribute("value");
+            string birthdayMonth = driver.FindElement(By.XPath("//select[@name='bmonth']/option[1]")).GetAttribute("value");
+            string birthdayYear = driver.FindElement(By.Name("byear")).GetAttribute("value");
+            if (birthdayDay == "0")
             {
-                birthday = null;
+                birthdayDay = null;
             }
-            string anniversary = driver.FindElement(By.XPath("//select[@name='aday']/option[1]")).GetAttribute("value")
-                + driver.FindElement(By.XPath("//select[@name='amonth']/option[1]")).GetAttribute("value")
-                + driver.FindElement(By.Name("ayear")).GetAttribute("value");
-            if (anniversary == "0-")
+            if (birthdayMonth == "-")
             {
-                anniversary = null;
+                birthdayMonth = null;
+            }
+            if (birthdayYear == "")
+            {
+                birthdayYear = null;
+            }
+
+            string anniversaryDay = driver.FindElement(By.XPath("//select[@name='aday']/option[1]")).GetAttribute("value");
+            string anniversaryMonth = driver.FindElement(By.XPath("//select[@name='amonth']/option[1]")).GetAttribute("value");
+            string anniversaryYear = driver.FindElement(By.Name("ayear")).GetAttribute("value");
+            if (anniversaryDay == "0")
+            {
+                anniversaryDay = null;
+            }
+            if (anniversaryDay == "-")
+            {
+                anniversaryMonth = null;
+            }
+            if (anniversaryYear == "")
+            {
+                anniversaryYear = null;
             }
 
             string secondAddress = driver.FindElement(By.Name("address2")).GetAttribute("value");
@@ -250,8 +268,12 @@ namespace WebAddressbookTests
                 Email1 = email1,
                 Email2 = email2,
                 Email3 = email3,
-                Birthday = birthday, 
-                Anniversary = anniversary, 
+                BirthdayDay = birthdayDay,
+                BirthdayMonth = birthdayMonth,
+                BirthdayYear = birthdayYear,
+                AnniversaryDay = anniversaryDay,
+                AnniversaryMonth = anniversaryMonth,
+                AnniversaryYear = anniversaryYear,
                 SecondAddress = secondAddress, 
                 SecondHomePhone = secondHomePhone, 
                 Notes = notes
@@ -264,7 +286,9 @@ namespace WebAddressbookTests
             string textFromForm = infoFromForm.FirstName + infoFromForm.MiddleName + infoFromForm.LastName + infoFromForm.Nickname
                 + infoFromForm.Title + infoFromForm.Company + infoFromForm.Address + infoFromForm.HomePhone + infoFromForm.MobilePhone 
                 + infoFromForm.WorkPhone + infoFromForm.FaxPhone + infoFromForm.Email1 + infoFromForm.Email2 + infoFromForm.Email3 
-                + infoFromForm.Birthday + infoFromForm.Anniversary + infoFromForm.SecondAddress + infoFromForm.SecondHomePhone + infoFromForm.Notes;
+                + infoFromForm.BirthdayDay + infoFromForm.BirthdayMonth + infoFromForm.BirthdayYear 
+                + infoFromForm.AnniversaryDay + infoFromForm.AnniversaryMonth + infoFromForm.AnniversaryYear 
+                + infoFromForm.SecondAddress + infoFromForm.SecondHomePhone + infoFromForm.Notes;
             return Regex.Replace(textFromForm, @"[\s.]", "");
         }
 

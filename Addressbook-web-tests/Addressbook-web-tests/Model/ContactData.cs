@@ -145,9 +145,13 @@ namespace WebAddressbookTests
 
         public string Email3 { get; set; }
 
-        public string Birthday { get; set; }
+        public string BirthdayDay { get; set; }
+        public string BirthdayMonth { get; set; }
+        public string BirthdayYear { get; set; }
 
-        public string Anniversary { get; set; }
+        public string AnniversaryDay { get; set; }
+        public string AnniversaryMonth { get; set; }
+        public string AnniversaryYear { get; set; }
 
         public string SecondAddress { get; set; }
 
