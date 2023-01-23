@@ -218,8 +218,8 @@ namespace WebAddressbookTests
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
-            string birthdayDay = driver.FindElement(By.XPath("//select[@name='bday']/option[1]")).GetAttribute("value");
-            string birthdayMonth = driver.FindElement(By.XPath("//select[@name='bmonth']/option[1]")).GetAttribute("value");
+            string birthdayDay = driver.FindElement(By.XPath("//select[@name='bday']/option[1]")).Text;
+            string birthdayMonth = driver.FindElement(By.XPath("//select[@name='bmonth']/option[1]")).Text;
             string birthdayYear = driver.FindElement(By.Name("byear")).GetAttribute("value");
             if (birthdayDay == "0")
             {
@@ -234,8 +234,8 @@ namespace WebAddressbookTests
                 birthdayYear = null;
             }
 
-            string anniversaryDay = driver.FindElement(By.XPath("//select[@name='aday']/option[1]")).GetAttribute("value");
-            string anniversaryMonth = driver.FindElement(By.XPath("//select[@name='amonth']/option[1]")).GetAttribute("value");
+            string anniversaryDay = driver.FindElement(By.XPath("//select[@name='aday']/option[1]")).Text;
+            string anniversaryMonth = driver.FindElement(By.XPath("//select[@name='amonth']/option[1]")).Text;
             string anniversaryYear = driver.FindElement(By.Name("ayear")).GetAttribute("value");
             if (anniversaryDay == "0")
             {
