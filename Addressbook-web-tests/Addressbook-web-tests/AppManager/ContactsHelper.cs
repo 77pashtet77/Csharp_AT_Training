@@ -447,6 +447,8 @@ namespace WebAddressbookTests
             string textFromForm = firstBlock + secondBlock + thirdBlock + fourthBlock
                 + infoFromForm.SecondAddress + infoFromForm.SecondHomePhone + infoFromForm.Notes;
 
+            contactInfoFromEditFormCache = null;
+
             return textFromForm;
         }
 
