@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Text;
+using System.Globalization;
 using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -283,11 +284,16 @@ namespace WebAddressbookTests
         public string GetFormattedDetailsFromEditForm(int index)
         {
             ContactData infoFromForm = GetContactInformationFromForm(index);
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            DateTime birthdayDate = DateTime.Parse($"{MonthConverter(infoFromForm.BirthdayMonth)}/{infoFromForm.BirthdayDay}/{infoFromForm.BirthdayYear}", provider).Date;
+            int currentAge = Convert.ToInt32(Math.Truncate(((DateTime.Now.Date - birthdayDate.Date).TotalDays) / 365.2425));
+            DateTime anniversaryDate = DateTime.Parse($"{MonthConverter(infoFromForm.AnniversaryMonth)}/{infoFromForm.AnniversaryDay}/{infoFromForm.AnniversaryYear}", provider).Date;
+            int anniversaryAge = Convert.ToInt32(Math.Truncate(((DateTime.Now.Date - anniversaryDate.Date).TotalDays) / 365.2425));
             string textFromForm = infoFromForm.FirstName + infoFromForm.MiddleName + infoFromForm.LastName + infoFromForm.Nickname
                 + infoFromForm.Title + infoFromForm.Company + infoFromForm.Address + infoFromForm.HomePhone + infoFromForm.MobilePhone 
                 + infoFromForm.WorkPhone + infoFromForm.FaxPhone + infoFromForm.Email1 + infoFromForm.Email2 + infoFromForm.Email3 
-                + infoFromForm.BirthdayDay + infoFromForm.BirthdayMonth + infoFromForm.BirthdayYear 
-                + infoFromForm.AnniversaryDay + infoFromForm.AnniversaryMonth + infoFromForm.AnniversaryYear 
+                + infoFromForm.BirthdayDay + infoFromForm.BirthdayMonth + infoFromForm.BirthdayYear + $"({currentAge})"
+                + infoFromForm.AnniversaryDay + infoFromForm.AnniversaryMonth + infoFromForm.AnniversaryYear + $"({anniversaryAge})"
                 + infoFromForm.SecondAddress + infoFromForm.SecondHomePhone + infoFromForm.Notes;
             return Regex.Replace(textFromForm, @"[\s.]", "");
         }
