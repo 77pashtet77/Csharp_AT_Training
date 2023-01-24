@@ -228,7 +228,7 @@ namespace WebAddressbookTests
                 string birthdayDay = driver.FindElement(By.XPath("//select[@name='bday']/option[1]")).Text;
                 string birthdayMonth = driver.FindElement(By.XPath("//select[@name='bmonth']/option[1]")).Text;
                 string birthdayYear = driver.FindElement(By.Name("byear")).GetAttribute("value");
-                if (birthdayDay == "0")
+                if (birthdayDay == "-")
                 {
                     birthdayDay = "";
                 }
@@ -240,11 +240,11 @@ namespace WebAddressbookTests
                 string anniversaryDay = driver.FindElement(By.XPath("//select[@name='aday']/option[1]")).Text;
                 string anniversaryMonth = driver.FindElement(By.XPath("//select[@name='amonth']/option[1]")).Text;
                 string anniversaryYear = driver.FindElement(By.Name("ayear")).GetAttribute("value");
-                if (anniversaryDay == "0")
+                if (anniversaryDay == "-")
                 {
                     anniversaryDay = "";
                 }
-                if (anniversaryDay == "-")
+                if (anniversaryMonth == "-")
                 {
                     anniversaryMonth = "";
                 }
@@ -345,6 +345,10 @@ namespace WebAddressbookTests
             {
                 secondBlock += "\r\n";
             }
+            else
+            {
+                firstBlock = firstBlock.Trim();
+            }
 
             //third block
             if (infoFromForm.Email1 != "")
@@ -364,6 +368,11 @@ namespace WebAddressbookTests
             {
                 thirdBlock += "\r\n";
             }
+            else
+            {
+                secondBlock = secondBlock.Trim();
+            }
+
 
             //fourth block
             if (infoFromForm.BirthdayDay != "")
@@ -412,15 +421,27 @@ namespace WebAddressbookTests
             {
                 fourthBlock += "\r\n";
             }
+            else
+            {
+                thirdBlock = thirdBlock.Trim();
+            }
 
             //rest
             if (infoFromForm.SecondAddress != "")
             {
                 infoFromForm.SecondAddress = infoFromForm.SecondAddress + "\r\n\r\n";
             }
+            else
+            {
+                fourthBlock = fourthBlock.Trim();
+            }
             if (infoFromForm.SecondHomePhone != "")
             {
                 infoFromForm.SecondHomePhone = "P: " + infoFromForm.SecondHomePhone + "\r\n\r\n";
+            }
+            else
+            {
+                infoFromForm.SecondAddress = infoFromForm.SecondAddress.Trim();
             }
 
             string textFromForm = firstBlock + secondBlock + thirdBlock + fourthBlock
@@ -432,7 +453,7 @@ namespace WebAddressbookTests
         public int GetCurrentAgeFromForm(int index)
         {
             ContactData infoFromForm = GetContactInformationFromForm(index);
-            if (infoFromForm.BirthdayYear != null)
+            if (infoFromForm.BirthdayYear != "")
             {
                 CultureInfo provider = CultureInfo.InvariantCulture;
                 DateTime birthdayDate = DateTime.Parse($"{MonthConverter(infoFromForm.BirthdayMonth)}/{infoFromForm.BirthdayDay}/{infoFromForm.BirthdayYear}", provider).Date;
@@ -445,7 +466,7 @@ namespace WebAddressbookTests
         public int GetYearsTillAnniversaryFromForm(int index)
         {
             ContactData infoFromForm = GetContactInformationFromForm(index);
-            if (infoFromForm.AnniversaryYear != null)
+            if (infoFromForm.AnniversaryYear != "")
             {
                 CultureInfo provider = CultureInfo.InvariantCulture;
                 DateTime yearsTillAnniversary = DateTime.Parse($"{MonthConverter(infoFromForm.AnniversaryMonth)}/{infoFromForm.AnniversaryDay}/{infoFromForm.AnniversaryYear}", provider).Date;
