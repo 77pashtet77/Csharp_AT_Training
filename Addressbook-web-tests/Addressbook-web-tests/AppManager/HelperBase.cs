@@ -47,6 +47,7 @@ namespace WebAddressbookTests
             }
         }
 
+        //converting text representation of a month into a number for easier parsing
         public string MonthConverter(string monthText)
         {
             Dictionary<string, string> months = new Dictionary<string, string>()

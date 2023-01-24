@@ -191,6 +191,7 @@ namespace WebAddressbookTests
             string allPhones = cells[5].Text;
             string allEmails = cells[4].Text;
 
+            //returning data in a format used on the main page
             return new ContactData(lastName, firstName)
             {
                 Address = address,
@@ -225,6 +226,7 @@ namespace WebAddressbookTests
                 string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
                 string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
+                //making the no-choise dropdown selection an empty string to match other fields empty state
                 string birthdayDay = driver.FindElement(By.XPath("//select[@name='bday']/option[1]")).Text;
                 string birthdayMonth = driver.FindElement(By.XPath("//select[@name='bmonth']/option[1]")).Text;
                 string birthdayYear = driver.FindElement(By.Name("byear")).GetAttribute("value");
@@ -287,6 +289,14 @@ namespace WebAddressbookTests
             string currentAge = (GetCurrentAgeFromForm(index)).ToString();
             string anniversaryAge = (GetYearsTillAnniversaryFromForm(index)).ToString();
 
+            //Divide all the data in several blocks, the same way it is done in details page
+            //if-checks can be refactored into custom method, accepting 3 string arguments which concat a string as a result
+            /*string FormatContactField(string 1, string 2, string 3)
+            if (2 != "")
+            {
+                2 = 1 + 2 + 3;
+            }
+            */
             //first block
             if (infoFromForm.FirstName != "")
             {
@@ -318,6 +328,7 @@ namespace WebAddressbookTests
             }
             string firstBlock = infoFromForm.FirstName + infoFromForm.MiddleName + infoFromForm.LastName + infoFromForm.Nickname
                 + infoFromForm.Title + infoFromForm.Company + infoFromForm.Address;
+            //checking if a block exists
             if (firstBlock != "")
             {
                 firstBlock += "\r\n";
@@ -345,6 +356,7 @@ namespace WebAddressbookTests
             {
                 secondBlock += "\r\n";
             }
+            //if no second block exists we should remove excessive symbols at the end of first one, and etc
             else
             {
                 firstBlock = firstBlock.Trim();
@@ -444,9 +456,11 @@ namespace WebAddressbookTests
                 infoFromForm.SecondAddress = infoFromForm.SecondAddress.Trim();
             }
 
+            //resulting text
             string textFromForm = firstBlock + secondBlock + thirdBlock + fourthBlock
                 + infoFromForm.SecondAddress + infoFromForm.SecondHomePhone + infoFromForm.Notes;
 
+            //cache should be cleared since we tweak data a lot
             contactInfoFromEditFormCache = null;
 
             return textFromForm;
@@ -459,6 +473,7 @@ namespace WebAddressbookTests
             {
                 CultureInfo provider = CultureInfo.InvariantCulture;
                 DateTime birthdayDate = DateTime.Parse($"{MonthConverter(infoFromForm.BirthdayMonth)}/{infoFromForm.BirthdayDay}/{infoFromForm.BirthdayYear}", provider).Date;
+                //may be slightly incorrect, since used approx days per year
                 int currentAge = Convert.ToInt32(Math.Truncate(((DateTime.Now.Date - birthdayDate.Date).TotalDays) / 365.2425));
                 return currentAge;
             }

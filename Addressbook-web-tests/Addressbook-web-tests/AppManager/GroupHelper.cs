@@ -145,8 +145,10 @@ namespace WebAddressbookTests
                     });
                 }
 
+                //filling groups names after getting headers and footers to accelerate the method
                 string allGroupNames = driver.FindElement(By.CssSelector("div#content form")).Text;
                 string[] parts = allGroupNames.Split('\n');
+                //shift requred for cases with >=1 empty name groups
                 int shift = groupCache.Count - parts.Length;
                 for (int i = 0; i < groupCache.Count; i++)
                 {
