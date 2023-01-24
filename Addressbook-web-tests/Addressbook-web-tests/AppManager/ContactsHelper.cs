@@ -61,16 +61,14 @@ namespace WebAddressbookTests
         public string GetContactDetails(int index)
         {
             OpenContactDetails(index);
-            return Regex.Replace(driver.FindElement(By.Id("content")).Text, @"[\r\n\s\.]", "")
-                .Replace("H:", "").Replace("M:", "").Replace("W:", "").Replace("P:", "").Replace("F:", "")
-                .Replace("Birthday", "").Replace("Anniversary", "");
+            return driver.FindElement(By.Id("content")).Text;
         }
 
 
         public ContactsHelper UpdateContact()
         {
             driver.FindElement(By.Name("update")).Click();
-            contactCache = null;
+            contactListCache = null;
             return this;
         }
 
@@ -79,21 +77,21 @@ namespace WebAddressbookTests
             manager.Navigator.GoToContactsPage();
             InitContactEdit(v);
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
-            contactCache = null;
+            contactListCache = null;
             return this;
         }
 
         public ContactsHelper RemoveContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
-            contactCache = null;
+            contactListCache = null;
             return this;
         }
 
         public ContactsHelper SubmitNewContact()
         {
             driver.FindElement(By.Name("submit")).Click();
-            contactCache = null;
+            contactListCache = null;
             return this;
         }
 
@@ -143,20 +141,20 @@ namespace WebAddressbookTests
             return this;
         }
 
-        private List<ContactData> contactCache = null;
+        private List<ContactData> contactListCache = null;
 
         public List<ContactData> GetContactsList()
         {
-            if (contactCache == null)
+            if (contactListCache == null)
             {
-                contactCache = new List<ContactData>();
+                contactListCache = new List<ContactData>();
 
                 manager.Navigator.GoToContactsPage();
 
                 ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
                 foreach (IWebElement element in elements)
                 {
-                    contactCache.Add(new ContactData(element.FindElement(By.XPath(".//td[2]")).Text, element.FindElement(By.XPath(".//td[3]")).Text)
+                    contactListCache.Add(new ContactData(element.FindElement(By.XPath(".//td[2]")).Text, element.FindElement(By.XPath(".//td[3]")).Text)
                     {
                         //adding Id property for each found element
                         Id = element.FindElement(By.TagName("input")).GetAttribute("id")
@@ -164,7 +162,7 @@ namespace WebAddressbookTests
                 }
             }
 
-            return new List<ContactData>(contactCache);
+            return new List<ContactData>(contactListCache);
         }
 
         //Hashing
@@ -224,15 +222,11 @@ namespace WebAddressbookTests
             string birthdayYear = driver.FindElement(By.Name("byear")).GetAttribute("value");
             if (birthdayDay == "0")
             {
-                birthdayDay = null;
+                birthdayDay = "";
             }
             if (birthdayMonth == "-")
             {
-                birthdayMonth = null;
-            }
-            if (birthdayYear == "")
-            {
-                birthdayYear = null;
+                birthdayMonth = "";
             }
 
             string anniversaryDay = driver.FindElement(By.XPath("//select[@name='aday']/option[1]")).Text;
@@ -240,15 +234,11 @@ namespace WebAddressbookTests
             string anniversaryYear = driver.FindElement(By.Name("ayear")).GetAttribute("value");
             if (anniversaryDay == "0")
             {
-                anniversaryDay = null;
+                anniversaryDay = "";
             }
             if (anniversaryDay == "-")
             {
-                anniversaryMonth = null;
-            }
-            if (anniversaryYear == "")
-            {
-                anniversaryYear = null;
+                anniversaryMonth = "";
             }
 
             string secondAddress = driver.FindElement(By.Name("address2")).GetAttribute("value");
@@ -284,18 +274,175 @@ namespace WebAddressbookTests
         public string GetFormattedDetailsFromEditForm(int index)
         {
             ContactData infoFromForm = GetContactInformationFromForm(index);
-            CultureInfo provider = CultureInfo.InvariantCulture;
-            DateTime birthdayDate = DateTime.Parse($"{MonthConverter(infoFromForm.BirthdayMonth)}/{infoFromForm.BirthdayDay}/{infoFromForm.BirthdayYear}", provider).Date;
-            int currentAge = Convert.ToInt32(Math.Truncate(((DateTime.Now.Date - birthdayDate.Date).TotalDays) / 365.2425));
-            DateTime anniversaryDate = DateTime.Parse($"{MonthConverter(infoFromForm.AnniversaryMonth)}/{infoFromForm.AnniversaryDay}/{infoFromForm.AnniversaryYear}", provider).Date;
-            int anniversaryAge = Convert.ToInt32(Math.Truncate(((DateTime.Now.Date - anniversaryDate.Date).TotalDays) / 365.2425));
-            string textFromForm = infoFromForm.FirstName + infoFromForm.MiddleName + infoFromForm.LastName + infoFromForm.Nickname
-                + infoFromForm.Title + infoFromForm.Company + infoFromForm.Address + infoFromForm.HomePhone + infoFromForm.MobilePhone 
-                + infoFromForm.WorkPhone + infoFromForm.FaxPhone + infoFromForm.Email1 + infoFromForm.Email2 + infoFromForm.Email3 
-                + infoFromForm.BirthdayDay + infoFromForm.BirthdayMonth + infoFromForm.BirthdayYear + $"({currentAge})"
-                + infoFromForm.AnniversaryDay + infoFromForm.AnniversaryMonth + infoFromForm.AnniversaryYear + $"({anniversaryAge})"
+            string currentAge = (GetCurrentAgeFromForm(index)).ToString();
+            string anniversaryAge = (GetYearsTillAnniversaryFromForm(index)).ToString();
+
+            //first block
+            if (infoFromForm.FirstName != "")
+            {
+                infoFromForm.FirstName = infoFromForm.FirstName + " ";
+            }
+            if (infoFromForm.MiddleName != "")
+            {
+                infoFromForm.MiddleName = infoFromForm.MiddleName + " ";
+            }
+            if (infoFromForm.LastName != "")
+            {
+                infoFromForm.LastName = infoFromForm.LastName + "\r\n";
+            }
+            if (infoFromForm.Nickname != "")
+            {
+                infoFromForm.Nickname = infoFromForm.Nickname + "\r\n";
+            }
+            if (infoFromForm.Title != "")
+            {
+                infoFromForm.Title = infoFromForm.Title + "\r\n";
+            }
+            if (infoFromForm.Company != "")
+            {
+                infoFromForm.Company = infoFromForm.Company + "\r\n";
+            }
+            if (infoFromForm.Address != "")
+            {
+                infoFromForm.Address = infoFromForm.Address + "\r\n";
+            }
+            string firstBlock = infoFromForm.FirstName + infoFromForm.MiddleName + infoFromForm.LastName + infoFromForm.Nickname
+                + infoFromForm.Title + infoFromForm.Company + infoFromForm.Address;
+            if (firstBlock != "")
+            {
+                firstBlock += "\r\n";
+            }
+
+            //second block
+            if (infoFromForm.HomePhone != "")
+            {
+                infoFromForm.HomePhone = "H: " + infoFromForm.HomePhone + "\r\n";
+            }
+            if (infoFromForm.MobilePhone != "")
+            {
+                infoFromForm.MobilePhone = "M: " + infoFromForm.MobilePhone + "\r\n";
+            }
+            if (infoFromForm.WorkPhone != "")
+            {
+                infoFromForm.WorkPhone = "W: " + infoFromForm.WorkPhone + "\r\n";
+            }
+            if (infoFromForm.FaxPhone != "")
+            {
+                infoFromForm.FaxPhone = "F: " + infoFromForm.FaxPhone + "\r\n\r\n";
+            }
+            string secondBlock = infoFromForm.HomePhone + infoFromForm.MobilePhone + infoFromForm.WorkPhone + infoFromForm.FaxPhone;
+            if (secondBlock != "")
+            {
+                secondBlock += "\r\n";
+            }
+
+            //third block
+            if (infoFromForm.Email1 != "")
+            {
+                infoFromForm.Email1 = infoFromForm.Email1 + "\r\n";
+            }
+            if (infoFromForm.Email2 != "")
+            {
+                infoFromForm.Email2 = infoFromForm.Email2 + "\r\n";
+            }
+            if (infoFromForm.Email3 != "")
+            {
+                infoFromForm.Email3 = infoFromForm.Email3 + "\r\n";
+            }
+            string thirdBlock = infoFromForm.Email1 + infoFromForm.Email2 + infoFromForm.Email3;
+            if (thirdBlock != "")
+            {
+                thirdBlock += "\r\n";
+            }
+
+            //fourth block
+            if (infoFromForm.BirthdayDay != "")
+            {
+                infoFromForm.BirthdayDay = "Birthday " + infoFromForm.BirthdayDay + ". ";
+            }
+            if (infoFromForm.BirthdayMonth != "")
+            {
+                infoFromForm.BirthdayMonth = infoFromForm.BirthdayMonth + " ";
+            }
+            if (infoFromForm.BirthdayYear != "")
+            {
+                infoFromForm.BirthdayYear = infoFromForm.BirthdayYear;
+            }
+            if (currentAge != "0")
+            {
+                currentAge = " (" + currentAge + ")\r\n";
+            }
+            else
+            {
+                currentAge = "\r\n";
+            }
+            if (infoFromForm.AnniversaryDay != "")
+            {
+                infoFromForm.AnniversaryDay = "Anniversary " + infoFromForm.AnniversaryDay + ". ";
+            }
+            if (infoFromForm.AnniversaryMonth != "")
+            {
+                infoFromForm.AnniversaryMonth = infoFromForm.AnniversaryMonth + " ";
+            }
+            if (infoFromForm.AnniversaryYear != "")
+            {
+                infoFromForm.AnniversaryYear = infoFromForm.AnniversaryYear;
+            }
+            if (anniversaryAge != "0")
+            {
+                anniversaryAge = " (" + anniversaryAge + ")\r\n";
+            }
+            else
+            {
+                anniversaryAge = "\r\n";
+            }
+            string fourthBlock = infoFromForm.BirthdayDay + infoFromForm.BirthdayMonth + infoFromForm.BirthdayYear + currentAge
+                + infoFromForm.AnniversaryDay + infoFromForm.AnniversaryMonth + infoFromForm.AnniversaryYear + anniversaryAge;
+            if (fourthBlock != "")
+            {
+                fourthBlock += "\r\n";
+            }
+
+            //rest
+            if (infoFromForm.SecondAddress != "")
+            {
+                infoFromForm.SecondAddress = infoFromForm.SecondAddress + "\r\n\r\n";
+            }
+            if (infoFromForm.SecondHomePhone != "")
+            {
+                infoFromForm.SecondHomePhone = "P: " + infoFromForm.SecondHomePhone + "\r\n\r\n";
+            }
+
+            string textFromForm = firstBlock + secondBlock + thirdBlock + fourthBlock
                 + infoFromForm.SecondAddress + infoFromForm.SecondHomePhone + infoFromForm.Notes;
-            return Regex.Replace(textFromForm, @"[\s.]", "");
+
+            return textFromForm;
+        }
+
+        public int GetCurrentAgeFromForm(int index)
+        {
+            ContactData infoFromForm = GetContactInformationFromForm(index);
+            if (infoFromForm.BirthdayYear != null)
+            {
+                CultureInfo provider = CultureInfo.InvariantCulture;
+                DateTime birthdayDate = DateTime.Parse($"{MonthConverter(infoFromForm.BirthdayMonth)}/{infoFromForm.BirthdayDay}/{infoFromForm.BirthdayYear}", provider).Date;
+                int currentAge = Convert.ToInt32(Math.Truncate(((DateTime.Now.Date - birthdayDate.Date).TotalDays) / 365.2425));
+                return currentAge;
+            }
+            return 0;
+        }
+
+        public int GetYearsTillAnniversaryFromForm(int index)
+        {
+            ContactData infoFromForm = GetContactInformationFromForm(index);
+            if (infoFromForm.AnniversaryYear != null)
+            {
+                CultureInfo provider = CultureInfo.InvariantCulture;
+                DateTime yearsTillAnniversary = DateTime.Parse($"{MonthConverter(infoFromForm.AnniversaryMonth)}/{infoFromForm.AnniversaryDay}/{infoFromForm.AnniversaryYear}", provider).Date;
+                int anniversaryAge = Convert.ToInt32(Math.Truncate(((DateTime.Now.Date - yearsTillAnniversary.Date).TotalDays) / 365.2425));
+                return anniversaryAge;
+            }
+            return 0;
         }
 
         public int GetNumberOfSearchResults()
