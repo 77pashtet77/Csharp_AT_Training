@@ -398,12 +398,6 @@ namespace WebAddressbookTests
             {
                 currentAge = "\r\n";
             }
-            string birthdayLine = infoFromForm.BirthdayDay + infoFromForm.BirthdayMonth + infoFromForm.BirthdayYear + currentAge;
-            if (birthdayLine == "\r\n")
-            {
-                birthdayLine = "";
-            }
-
             if (infoFromForm.AnniversaryDay != "")
             {
                 infoFromForm.AnniversaryDay = "Anniversary " + infoFromForm.AnniversaryDay + ". ";
@@ -424,13 +418,8 @@ namespace WebAddressbookTests
             {
                 anniversaryAge = "\r\n";
             }
-            string anniversaryLine = infoFromForm.AnniversaryDay + infoFromForm.AnniversaryMonth + infoFromForm.AnniversaryYear + anniversaryAge;
-            if (anniversaryLine == "\r\n")
-            {
-                anniversaryLine = "";
-            }
-
-            string fourthBlock = birthdayLine + anniversaryLine;
+            string fourthBlock = infoFromForm.BirthdayDay + infoFromForm.BirthdayMonth + infoFromForm.BirthdayYear + currentAge
+                + infoFromForm.AnniversaryDay + infoFromForm.AnniversaryMonth + infoFromForm.AnniversaryYear + anniversaryAge;
             if (fourthBlock != "")
             {
                 fourthBlock += "\r\n";
