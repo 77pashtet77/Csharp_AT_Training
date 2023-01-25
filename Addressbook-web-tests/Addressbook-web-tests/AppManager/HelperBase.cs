@@ -74,7 +74,6 @@ namespace WebAddressbookTests
                 }
             }
             return monthText;
-
         }
     }
 }

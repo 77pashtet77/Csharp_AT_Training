@@ -162,7 +162,7 @@ namespace WebAddressbookTests
                     }
                 }
             }
-
+            //if cache exists returning new list with fields filled from it
             return new List<GroupData>(groupCache);
         }
 
