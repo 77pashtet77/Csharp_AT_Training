@@ -429,8 +429,7 @@ namespace WebAddressbookTests
                 anniversaryLine = "";
             }
 
-            string fourthBlock = birthdayLine + anniversaryLine;
-                fourthBlock += "\r\n";
+            string fourthBlock = birthdayLine + anniversaryLine + "\r\n";
 
             //rest
             if (infoFromForm.SecondAddress != "")
