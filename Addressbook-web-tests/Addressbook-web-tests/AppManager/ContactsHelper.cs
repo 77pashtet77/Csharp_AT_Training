@@ -349,17 +349,12 @@ namespace WebAddressbookTests
             }
             if (infoFromForm.FaxPhone != "")
             {
-                infoFromForm.FaxPhone = "F: " + infoFromForm.FaxPhone + "\r\n\r\n";
+                infoFromForm.FaxPhone = "F: " + infoFromForm.FaxPhone + "\r\n";
             }
             string secondBlock = infoFromForm.HomePhone + infoFromForm.MobilePhone + infoFromForm.WorkPhone + infoFromForm.FaxPhone;
             if (secondBlock != "")
             {
                 secondBlock += "\r\n";
-            }
-            //if no second block exists we should remove excessive symbols at the end of first one, and etc
-            else
-            {
-                firstBlock = firstBlock.Trim();
             }
 
             //third block
@@ -379,10 +374,6 @@ namespace WebAddressbookTests
             if (thirdBlock != "")
             {
                 thirdBlock += "\r\n";
-            }
-            else
-            {
-                secondBlock = secondBlock.Trim();
             }
 
 
@@ -433,32 +424,33 @@ namespace WebAddressbookTests
             {
                 fourthBlock += "\r\n";
             }
-            else
-            {
-                thirdBlock = thirdBlock.Trim();
-            }
 
             //rest
             if (infoFromForm.SecondAddress != "")
             {
                 infoFromForm.SecondAddress = infoFromForm.SecondAddress + "\r\n\r\n";
             }
-            else
+            else if (infoFromForm.SecondHomePhone != "" && infoFromForm.SecondAddress == "")
             {
-                fourthBlock = fourthBlock.Trim();
+                infoFromForm.SecondAddress = "\r\n";
             }
             if (infoFromForm.SecondHomePhone != "")
             {
                 infoFromForm.SecondHomePhone = "P: " + infoFromForm.SecondHomePhone + "\r\n\r\n";
             }
-            else
-            {
-                infoFromForm.SecondAddress = infoFromForm.SecondAddress.Trim();
-            }
 
-            //resulting text
-            string textFromForm = firstBlock + secondBlock + thirdBlock + fourthBlock
-                + infoFromForm.SecondAddress + infoFromForm.SecondHomePhone + infoFromForm.Notes;
+            //если длина 1го блока == длине всей строки, то триммить, если != то добавлять второй. Дальше если 1+2 == длине всей строки, то триммим, если !=, то нет и т.д.
+            string[] blocks = new string[] {firstBlock, secondBlock,thirdBlock, fourthBlock, infoFromForm.SecondAddress, infoFromForm.SecondHomePhone, infoFromForm.Notes };
+            string textFromForm = firstBlock + secondBlock + thirdBlock + fourthBlock + infoFromForm.SecondAddress + infoFromForm.SecondHomePhone + infoFromForm.Notes;
+            string buffer = "";
+            for (int i = 0; i < blocks.Length; i++)
+            {
+                buffer = buffer + blocks[i];
+                if (buffer.Length == textFromForm.Length)
+                {
+                    textFromForm = textFromForm.Trim();
+                }
+            }
 
             //cache should be cleared since we tweak data a lot
             contactInfoFromEditFormCache = null;
