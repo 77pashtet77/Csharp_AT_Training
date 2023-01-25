@@ -291,7 +291,7 @@ namespace WebAddressbookTests
 
             //Divide all the data in several blocks, the same way it is done in details page
             //if-checks can be refactored into custom method, accepting 3 string arguments which concat a string as a result
-            /*string FormatContactField(string 1, string 2, string 3) //where second is infoFromForm field
+            /*string FormatContactField(string 1, string 2, string 3)
             if (2 != "")
             {
                 2 = 1 + 2 + 3;
@@ -430,7 +430,6 @@ namespace WebAddressbookTests
             {
                 infoFromForm.SecondAddress = infoFromForm.SecondAddress + "\r\n\r\n";
             }
-            //if second home phone is present and no address is then there is 2 empty strings in details
             else if (infoFromForm.SecondHomePhone != "" && infoFromForm.SecondAddress == "")
             {
                 infoFromForm.SecondAddress = "\r\n";
@@ -444,15 +443,13 @@ namespace WebAddressbookTests
             string[] blocks = new string[] {firstBlock, secondBlock,thirdBlock, fourthBlock, infoFromForm.SecondAddress, infoFromForm.SecondHomePhone, infoFromForm.Notes };
             string textFromForm = firstBlock + secondBlock + thirdBlock + fourthBlock + infoFromForm.SecondAddress + infoFromForm.SecondHomePhone + infoFromForm.Notes;
             string buffer = "";
-            int i = 0;
-            while (buffer.Length <= textFromForm.Length)
+            for (int i = 0; i < blocks.Length; i++)
             {
                 buffer = buffer + blocks[i];
                 if (buffer.Length == textFromForm.Length)
                 {
                     textFromForm = textFromForm.Trim();
                 }
-                i++;
             }
 
             //cache should be cleared since we tweak data a lot
