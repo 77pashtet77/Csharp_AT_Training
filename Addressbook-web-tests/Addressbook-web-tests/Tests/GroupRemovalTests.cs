@@ -8,26 +8,26 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupRemovalTests : AuthTestBase
+    public class GroupRemovalTests : GroupTestBase
     {
         [Test]
         public void GroupRemovalTest()
         {
             app.Groups.CreateGroupIfNoneExists();
 
-            List<GroupData> oldGroups = app.Groups.GetGroupsList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
-            app.Groups.Remove(0);
+            //saving old groups list state before removal
+            GroupData toBeRemoved = oldGroups[0];
+
+            app.Groups.Remove(toBeRemoved);
 
             //Hashing
             //Remove code below for stable tests
             Assert.AreEqual(oldGroups.Count - 1, app.Groups.GetGroupsCount());
             //remove
 
-            List<GroupData> newGroups = app.Groups.GetGroupsList();
-
-            //saving old groups list state before removal
-            GroupData toBeRemoved = oldGroups[0];
+            List<GroupData> newGroups = GroupData.GetAll();
 
             oldGroups.RemoveAt(0);
             Assert.AreEqual(oldGroups, newGroups);

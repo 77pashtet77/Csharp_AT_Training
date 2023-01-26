@@ -8,26 +8,27 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactRemovalTests : AuthTestBase
+    public class ContactRemovalTests : ContactTestBase
     {
         [Test]
         public void ContactRemovalTest()
         {
             app.Contacts.CreateContactIfNoneExists();
 
-            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+            List<ContactData> oldContacts = ContactData.GetAll();
 
-            app.Contacts.Remove(0, true);
+            ContactData toBeRemoved = oldContacts[0];
+
+            app.Contacts.Remove(toBeRemoved, true);
 
             //Hashing
             //Remove code below for stable tests
             Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactsCount());
             //remove
 
-            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            List<ContactData> newContacts = ContactData.GetAll();
 
             //saving old groups list state before removal
-            ContactData toBeRemoved = oldContacts[0];
 
             oldContacts.RemoveAt(0);
             Assert.AreEqual(oldContacts, newContacts);
@@ -44,16 +45,18 @@ namespace WebAddressbookTests
         {
             app.Contacts.CreateContactIfNoneExists();
 
-            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+            List<ContactData> oldContacts = ContactData.GetAll();
 
-            app.Contacts.Remove(0, false);
+            ContactData toBeRemoved = oldContacts[0];
+
+            app.Contacts.Remove(toBeRemoved, false);
 
             //Hashing
             //Remove code below for stable tests
             Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactsCount());
             //remove
 
-            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            List<ContactData> newContacts = ContactData.GetAll();
             Assert.AreEqual(oldContacts, newContacts);
         }
 
@@ -62,19 +65,19 @@ namespace WebAddressbookTests
         {
             app.Contacts.CreateContactIfNoneExists();
 
-            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+            List<ContactData> oldContacts = ContactData.GetAll();
 
-            app.Contacts.RemoveContactThroughEdit(0);
+            //saving old groups list state before removal
+            ContactData toBeRemoved = oldContacts[0];
+
+            app.Contacts.RemoveContactThroughEdit(toBeRemoved);
 
             //Hashing
             //Remove code below for stable tests
             Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactsCount());
             //remove
 
-            List<ContactData> newContacts = app.Contacts.GetContactsList();
-
-            //saving old groups list state before removal
-            ContactData toBeRemoved = oldContacts[0];
+            List<ContactData> newContacts = ContactData.GetAll();
 
             oldContacts.RemoveAt(0);
             Assert.AreEqual(oldContacts, newContacts);

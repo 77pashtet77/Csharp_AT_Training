@@ -37,11 +37,49 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactsHelper Remove(ContactData contact, bool alertAccept)
+        {
+            manager.Navigator.GoToContactsPage();
+            SelectContact(contact.Id);
+            RemoveContact();
+            AlertAccept(alertAccept);
+            return this;
+        }
+
+        public ContactsHelper RemoveContactThroughEdit(int v)
+        {
+            manager.Navigator.GoToContactsPage();
+            InitContactEdit(v);
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            contactListCache = null;
+            contactInfoFromEditFormCache = null;
+            return this;
+        }
+
+        public ContactsHelper RemoveContactThroughEdit(ContactData contact)
+        {
+            manager.Navigator.GoToContactsPage();
+            InitContactEdit(contact.Id);
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            contactListCache = null;
+            contactInfoFromEditFormCache = null;
+            return this;
+        }
+
         public ContactsHelper Modify(int v, ContactData contact)
         {
             manager.Navigator.GoToContactsPage();
             InitContactEdit(v);
             FillContactForm(contact);
+            UpdateContact();
+            return this;
+        }
+
+        public ContactsHelper Modify(ContactData contactOld, ContactData contactNew)
+        {
+            manager.Navigator.GoToContactsPage();
+            InitContactEdit(contactOld.Id);
+            FillContactForm(contactNew);
             UpdateContact();
             return this;
         }
@@ -52,9 +90,21 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactsHelper InitContactEdit(string id)
+        {
+            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='"+id+"']/../../tr/td[8]/a/img")).Click();
+            return this;
+        }
+
         public ContactsHelper OpenContactDetails(int index)
         {
             driver.FindElement(By.XPath("//table//tr[" + (index + 2) + "]/td[7]/a/img")).Click();
+            return this;
+        }
+
+        public ContactsHelper OpenContactDetails(string id)
+        {
+            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='" + id + "']/../../tr/td[7]/a/img")).Click();
             return this;
         }
 
@@ -68,16 +118,6 @@ namespace WebAddressbookTests
         public ContactsHelper UpdateContact()
         {
             driver.FindElement(By.Name("update")).Click();
-            contactListCache = null;
-            contactInfoFromEditFormCache = null;
-            return this;
-        }
-
-        public ContactsHelper RemoveContactThroughEdit(int v)
-        {
-            manager.Navigator.GoToContactsPage();
-            InitContactEdit(v);
-            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             contactListCache = null;
             contactInfoFromEditFormCache = null;
             return this;
@@ -110,6 +150,12 @@ namespace WebAddressbookTests
         public ContactsHelper SelectContact(int index)
         {
             driver.FindElement(By.XPath("//table//tr[" + (index + 2) + "]/td[1]/input")).Click();
+            return this;
+        }
+
+        public ContactsHelper SelectContact(string id)
+        {
+            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='" + id + "']")).Click();
             return this;
         }
 

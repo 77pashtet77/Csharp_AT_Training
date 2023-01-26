@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace WebAddressbookTests
 {
-    public class ContactModificationTests : AuthTestBase
+    public class ContactModificationTests : ContactTestBase
     {
         [Test]
         public void ContactModificationTest()
@@ -18,19 +18,19 @@ namespace WebAddressbookTests
 
             app.Contacts.CreateContactIfNoneExists();
 
-            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+            List<ContactData> oldContacts = ContactData.GetAll();
 
             //saving old contacts list state before modification and sorting
             ContactData oldData = oldContacts[0];
 
-            app.Contacts.Modify(0, newData);
+            app.Contacts.Modify(oldData, newData);
 
             //Hashing
             //Remove code below for stable tests
             Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactsCount());
             //remove
 
-            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            List<ContactData> newContacts = ContactData.GetAll();
             //Filling old contact fields with new values
             oldContacts[0].FirstName = newData.FirstName;
             oldContacts[0].LastName = newData.LastName;
@@ -57,19 +57,19 @@ namespace WebAddressbookTests
 
             app.Contacts.CreateContactIfNoneExists();
 
-            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+            List<ContactData> oldContacts = ContactData.GetAll();
 
             //saving old contacts list state before modification and sorting
             ContactData oldData = oldContacts[0];
 
-            app.Contacts.Modify(0, newData);
+            app.Contacts.Modify(oldData, newData);
 
             //Hashing
             //Remove code below for stable tests
             Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactsCount());
             //remove
 
-            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            List<ContactData> newContacts = ContactData.GetAll();
             //Filling old contact fields with new values
             oldContacts[0].FirstName = newData.FirstName;
             oldContacts[0].LastName = newData.LastName;
