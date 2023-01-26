@@ -297,6 +297,8 @@ namespace WebAddressbookTests
                 2 = 1 + 2 + 3;
             }
             */
+            //where 2 stands for info from form field
+
             //first block
             if (infoFromForm.FirstName != "")
             {
@@ -404,6 +406,7 @@ namespace WebAddressbookTests
                 currentAge = "\r\n";
             }
             string birthdayLine = infoFromForm.BirthdayDay + infoFromForm.BirthdayMonth + infoFromForm.BirthdayYear + currentAge;
+            //removing string break if no line exists
             if (birthdayLine == "\r\n")
             {
                 birthdayLine = "";
@@ -441,6 +444,7 @@ namespace WebAddressbookTests
             {
                 infoFromForm.SecondAddress = infoFromForm.SecondAddress + "\r\n\r\n";
             }
+            //supporting custom logic: when second address is absent and second phone exists - adding one more string break between previous block and phone
             else if (infoFromForm.SecondHomePhone != "" && infoFromForm.SecondAddress == "")
             {
                 infoFromForm.SecondAddress = "\r\n";
@@ -450,7 +454,7 @@ namespace WebAddressbookTests
                 infoFromForm.SecondHomePhone = "P: " + infoFromForm.SecondHomePhone + "\r\n\r\n";
             }
 
-            //если длина 1го блока == длине всей строки, то триммить, если != то добавлять второй. Дальше если 1+2 == длине всей строки, то триммим, если !=, то нет и т.д.
+            //trimming a block if no further text exists
             string[] blocks = new string[] {firstBlock, secondBlock,thirdBlock, fourthBlock, infoFromForm.SecondAddress, infoFromForm.SecondHomePhone, infoFromForm.Notes };
             string textFromForm = firstBlock + secondBlock + thirdBlock + fourthBlock + infoFromForm.SecondAddress + infoFromForm.SecondHomePhone + infoFromForm.Notes;
             string buffer = "";
