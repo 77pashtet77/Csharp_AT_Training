@@ -310,6 +310,12 @@ namespace WebAddressbookTests
             {
                 infoFromForm.LastName = infoFromForm.LastName + "\r\n";
             }
+            //if last name isnt filled - trim excessive whitespaces and add string break
+            string nameLine = infoFromForm.FirstName + infoFromForm.MiddleName + infoFromForm.LastName;
+            if (nameLine != "" && infoFromForm.LastName == "")
+            {
+                nameLine = nameLine.Trim() + "\r\n";
+            }
             if (infoFromForm.Nickname != "")
             {
                 infoFromForm.Nickname = infoFromForm.Nickname + "\r\n";
@@ -326,8 +332,7 @@ namespace WebAddressbookTests
             {
                 infoFromForm.Address = infoFromForm.Address + "\r\n";
             }
-            string firstBlock = infoFromForm.FirstName + infoFromForm.MiddleName + infoFromForm.LastName + infoFromForm.Nickname
-                + infoFromForm.Title + infoFromForm.Company + infoFromForm.Address;
+            string firstBlock = nameLine + infoFromForm.Nickname + infoFromForm.Title + infoFromForm.Company + infoFromForm.Address;
             //checking if a block exists
             if (firstBlock != "")
             {
