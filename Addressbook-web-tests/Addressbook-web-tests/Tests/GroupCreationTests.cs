@@ -104,6 +104,7 @@ namespace WebAddressbookTests
             Assert.AreEqual(oldGroups, newGroups);
         }
 
+        /*
         [Test]
         public void TestDbConnectivity()
         {
@@ -117,5 +118,6 @@ namespace WebAddressbookTests
             finish = DateTime.Now;
             Console.WriteLine(finish.Subtract(start));
         }
+        */
     }
 }

@@ -1,4 +1,3 @@
-fix locator for contact modification by id from DB
 use DB for contact creation
 use db for contact details
 use db for contact information

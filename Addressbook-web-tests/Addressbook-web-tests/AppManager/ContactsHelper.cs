@@ -11,6 +11,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
@@ -92,7 +93,7 @@ namespace WebAddressbookTests
 
         public ContactsHelper InitContactEdit(string id)
         {
-            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='"+id+"']/../../tr/td[8]/a/img")).Click();
+            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='"+id+"']/../../td[8]/a/img")).Click();
             return this;
         }
 
@@ -104,7 +105,7 @@ namespace WebAddressbookTests
 
         public ContactsHelper OpenContactDetails(string id)
         {
-            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='" + id + "']/../../tr/td[7]/a/img")).Click();
+            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='" + id + "']/../../td[7]/a/img")).Click();
             return this;
         }
 
