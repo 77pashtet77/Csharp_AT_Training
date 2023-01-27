@@ -72,7 +72,7 @@ namespace WebAddressbookTests
         [Column(Name = "firstname")]
         public string FirstName { get; set; }
 
-        [Column(Name = "id")]
+        [Column(Name = "id"), PrimaryKey, Identity]
         public string Id { get; set; }
 
         [Column(Name = "middlename")]
@@ -192,7 +192,7 @@ namespace WebAddressbookTests
         {
             using (AddressBookDB db = new AddressBookDB())
             {
-                return (from g in db.Contacts select g).ToList();
+                return (from c in db.Contacts select c).ToList();
             }
         }
     }
