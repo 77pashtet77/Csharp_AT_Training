@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -13,7 +14,9 @@ namespace WebAddressbookTests
         [Test]
         public void ContactDetailsTest()
         {
-            Assert.AreEqual(app.Contacts.GetContactDetails(0), app.Contacts.GetFormattedDetailsFromEditForm(0));
+            ContactData selectedContact = ContactData.GetAll().ElementAt(0);
+
+            Assert.AreEqual(app.Contacts.GetContactDetails(selectedContact), app.Contacts.GetFormattedDetailsFromEditForm(0));
         }
     }
 }

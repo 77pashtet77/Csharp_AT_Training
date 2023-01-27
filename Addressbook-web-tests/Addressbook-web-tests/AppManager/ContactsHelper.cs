@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Text;
 using System.Globalization;
+using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -115,6 +116,12 @@ namespace WebAddressbookTests
             return driver.FindElement(By.Id("content")).Text;
         }
 
+
+        public string GetContactDetails(ContactData contact)
+        {
+            OpenContactDetails(contact.Id);
+            return driver.FindElement(By.Id("content")).Text;
+        }
 
         public ContactsHelper UpdateContact()
         {
@@ -247,6 +254,28 @@ namespace WebAddressbookTests
             };
         }
 
+        public ContactData GetContactInformationFromTable(ContactData contact)
+        {
+            manager.Navigator.GoToContactsPage();
+
+            IList<IWebElement> cells = driver.FindElement(By.XPath("//input[@name='selected[]' and @value='" + Convert.ToInt32(contact.Id) + "']/../.."))
+                .FindElements(By.TagName("td"));
+
+            string firstName = cells[2].Text;
+            string lastName = cells[1].Text;
+            string address = cells[3].Text;
+            string allPhones = cells[5].Text;
+            string allEmails = cells[4].Text;
+
+            //returning data in a format used on the main page
+            return new ContactData(lastName, firstName)
+            {
+                Address = address,
+                AllPhones = allPhones,
+                AllEmails = allEmails
+            };
+        }
+
         private ContactData contactInfoFromEditFormCache = null;
 
         public ContactData GetContactInformationFromForm(int index)
@@ -330,9 +359,31 @@ namespace WebAddressbookTests
             return contactInfoFromEditFormCache;
         }
 
+        public ContactData GetContactInformationFromDB(int index)
+        {
+            contactInfoFromEditFormCache = ContactData.GetAll().ElementAt(index);
+            if (contactInfoFromEditFormCache.BirthdayDay == "0")
+            {
+                contactInfoFromEditFormCache.BirthdayDay = "";
+            }
+            if (contactInfoFromEditFormCache.BirthdayMonth == "-")
+            {
+                contactInfoFromEditFormCache.BirthdayMonth = "";
+            }
+            if (contactInfoFromEditFormCache.AnniversaryDay == "0")
+            {
+                contactInfoFromEditFormCache.AnniversaryDay = "";
+            }
+            if (contactInfoFromEditFormCache.AnniversaryMonth == "-")
+            {
+                contactInfoFromEditFormCache.AnniversaryMonth = "";
+            }
+            return contactInfoFromEditFormCache;
+        }
+
         public string GetFormattedDetailsFromEditForm(int index)
         {
-            ContactData infoFromForm = GetContactInformationFromForm(index);
+            ContactData infoFromForm = GetContactInformationFromDB(index);
             string currentAge = (GetCurrentAgeFromForm(index)).ToString();
             string anniversaryAge = (GetYearsTillAnniversaryFromForm(index)).ToString();
 
@@ -522,7 +573,7 @@ namespace WebAddressbookTests
 
         public int GetCurrentAgeFromForm(int index)
         {
-            ContactData infoFromForm = GetContactInformationFromForm(index);
+            ContactData infoFromForm = GetContactInformationFromDB(index);
             if (infoFromForm.BirthdayYear != "")
             {
                 CultureInfo provider = CultureInfo.InvariantCulture;
@@ -536,7 +587,7 @@ namespace WebAddressbookTests
 
         public int GetYearsTillAnniversaryFromForm(int index)
         {
-            ContactData infoFromForm = GetContactInformationFromForm(index);
+            ContactData infoFromForm = GetContactInformationFromDB(index);
             if (infoFromForm.AnniversaryYear != "")
             {
                 CultureInfo provider = CultureInfo.InvariantCulture;

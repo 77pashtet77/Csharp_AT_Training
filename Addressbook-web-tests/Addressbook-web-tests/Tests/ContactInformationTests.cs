@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -13,8 +14,10 @@ namespace WebAddressbookTests
         [Test]
         public void ContactInformationTest()
         {
-            ContactData infoFromTable = app.Contacts.GetContactInformationFromTable(0);
-            ContactData infoFromForm = app.Contacts.GetContactInformationFromForm(0);
+            ContactData selectedContact = ContactData.GetAll().ElementAt(0);
+            
+            ContactData infoFromTable = app.Contacts.GetContactInformationFromTable(selectedContact);
+            ContactData infoFromForm = app.Contacts.GetContactInformationFromDB(0);
 
             Assert.AreEqual(infoFromTable, infoFromForm);
             Assert.AreEqual(infoFromTable.Address, infoFromForm.Address);
