@@ -14,6 +14,8 @@ namespace WebAddressbookTests
         [Test]
         public void ContactDetailsTest()
         {
+            app.Contacts.CreateContactIfNoneExists();
+
             ContactData selectedContact = ContactData.GetAll().ElementAt(0);
 
             Assert.AreEqual(app.Contacts.GetContactDetails(selectedContact), app.Contacts.GetFormattedDetailsFromEditForm(0));

@@ -14,6 +14,8 @@ namespace WebAddressbookTests
         [Test]
         public void ContactInformationTest()
         {
+            app.Contacts.CreateContactIfNoneExists();
+
             ContactData selectedContact = ContactData.GetAll().ElementAt(0);
             
             ContactData infoFromTable = app.Contacts.GetContactInformationFromTable(selectedContact);
