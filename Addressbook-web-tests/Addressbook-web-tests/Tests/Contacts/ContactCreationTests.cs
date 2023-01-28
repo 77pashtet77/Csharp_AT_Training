@@ -48,7 +48,7 @@ namespace WebAddressbookTests
         public static IEnumerable<ContactData> ContactDataFromCsvFile()
         {
             List<ContactData> contacts = new List<ContactData>();
-            string[] lines = File.ReadAllLines(@"contacts.csv");
+            string[] lines = File.ReadAllLines(@"TestData/contacts.csv");
             foreach (string l in lines)
             {
                 string[] parts = l.Split(',');
@@ -61,13 +61,13 @@ namespace WebAddressbookTests
         {
             return (List<ContactData>)
                 new XmlSerializer(typeof(List<ContactData>))
-                .Deserialize(new StreamReader(@"contacts.xml"));
+                .Deserialize(new StreamReader(@"TestData/contacts.xml"));
         }
 
         public static IEnumerable<ContactData> ContactDataFromJsonFile()
         {
             return JsonConvert.DeserializeObject<List<ContactData>>(
-                File.ReadAllText(@"contacts.json"));
+                File.ReadAllText(@"TestData/contacts.json"));
         }
 
         /*

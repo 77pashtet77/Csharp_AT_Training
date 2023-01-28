@@ -86,6 +86,30 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactsHelper AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToContactsPage();
+            ClearGroupFilter();
+            SelectContact(contact.Id);
+            SelectGroupToAddTo(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+            return this;
+        }
+
+        public ContactsHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("//table//tr[" + (index + 2) + "]/td[1]/input")).Click();
+            return this;
+        }
+
+        public ContactsHelper SelectContact(string id)
+        {
+            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='" + id + "']")).Click();
+            return this;
+        }
+
         public ContactsHelper InitContactEdit(int index)
         {
             driver.FindElement(By.XPath("//table//tr[" + (index + 2) + "]/td[8]/a/img")).Click();
@@ -155,15 +179,21 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactsHelper SelectContact(int index)
+        public ContactsHelper CommitAddingContactToGroup()
         {
-            driver.FindElement(By.XPath("//table//tr[" + (index + 2) + "]/td[1]/input")).Click();
+            driver.FindElement(By.Name("add")).Click();
             return this;
         }
 
-        public ContactsHelper SelectContact(string id)
+        public ContactsHelper SelectGroupToAddTo(string name)
         {
-            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='" + id + "']")).Click();
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+            return this;
+        }
+
+        public ContactsHelper ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
             return this;
         }
 

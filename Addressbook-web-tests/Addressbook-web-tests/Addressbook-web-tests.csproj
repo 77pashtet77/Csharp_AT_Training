@@ -117,53 +117,54 @@
   <ItemGroup>
     <Compile Include="Model\AddressBookDB.cs" />
     <Compile Include="Model\GroupContactRelation.cs" />
-    <Compile Include="Tests\AuthTestBase.cs" />
-    <Compile Include="Tests\ContactDetailsTests.cs" />
-    <Compile Include="Tests\ContactInformationTests.cs" />
-    <Compile Include="Tests\ContactTestBase.cs" />
-    <Compile Include="Tests\GroupTestBase.cs" />
-    <Compile Include="Tests\LoginTests.cs" />
-    <Compile Include="Tests\ContactModificationTests.cs" />
-    <Compile Include="Tests\ContactRemovalTests.cs" />
-    <Compile Include="Tests\GroupModificationTests.cs" />
+    <Compile Include="Tests\Contacts\AddingContactToGroupTests.cs" />
+    <Compile Include="Tests\Base\AuthTestBase.cs" />
+    <Compile Include="Tests\Contacts\ContactDetailsTests.cs" />
+    <Compile Include="Tests\Contacts\ContactInformationTests.cs" />
+    <Compile Include="Tests\Base\ContactTestBase.cs" />
+    <Compile Include="Tests\Base\GroupTestBase.cs" />
+    <Compile Include="Tests\Login\LoginTests.cs" />
+    <Compile Include="Tests\Contacts\ContactModificationTests.cs" />
+    <Compile Include="Tests\Contacts\ContactRemovalTests.cs" />
+    <Compile Include="Tests\Groups\GroupModificationTests.cs" />
     <Compile Include="Model\AccountData.cs" />
     <Compile Include="AppManager\ApplicationManager.cs" />
     <Compile Include="Model\ContactData.cs" />
     <Compile Include="AppManager\ContactsHelper.cs" />
     <Compile Include="Model\GroupData.cs" />
     <Compile Include="AppManager\GroupHelper.cs" />
-    <Compile Include="Tests\GroupRemovalTests.cs" />
+    <Compile Include="Tests\Groups\GroupRemovalTests.cs" />
     <Compile Include="AppManager\HelperBase.cs" />
     <Compile Include="AppManager\LoginHelper.cs" />
     <Compile Include="AppManager\NavigationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\GroupCreationTests.cs" />
-    <Compile Include="Tests\ContactCreationTests.cs" />
-    <Compile Include="Tests\SearchTests.cs" />
-    <Compile Include="Tests\TestBase.cs" />
+    <Compile Include="Tests\Groups\GroupCreationTests.cs" />
+    <Compile Include="Tests\Contacts\ContactCreationTests.cs" />
+    <Compile Include="Tests\Contacts\ContactSearchTests.cs" />
+    <Compile Include="Tests\Base\TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="ClassDiagram.cd" />
-    <None Include="contacts.csv">
+    <None Include="TestData\contacts.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="contacts.json">
+    <None Include="TestData\contacts.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="groups.csv">
+    <None Include="TestData\groups.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="groups.json">
+    <None Include="TestData\groups.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="contacts.xml">
+    <Content Include="TestData\contacts.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="groups.xml">
+    <Content Include="TestData\groups.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
