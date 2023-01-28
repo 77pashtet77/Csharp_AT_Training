@@ -30,25 +30,25 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactsHelper Remove(int v, bool alertAccept)
+        public ContactsHelper Delete(int v, bool alertAccept)
         {
             manager.Navigator.GoToContactsPage();
             SelectContact(v);
-            RemoveContact();
+            DeleteContact();
             AlertAccept(alertAccept);
             return this;
         }
 
-        public ContactsHelper Remove(ContactData contact, bool alertAccept)
+        public ContactsHelper Delete(ContactData contact, bool alertAccept)
         {
             manager.Navigator.GoToContactsPage();
             SelectContact(contact.Id);
-            RemoveContact();
+            DeleteContact();
             AlertAccept(alertAccept);
             return this;
         }
 
-        public ContactsHelper RemoveContactThroughEdit(int v)
+        public ContactsHelper DeleteContactThroughEdit(int v)
         {
             manager.Navigator.GoToContactsPage();
             InitContactEdit(v);
@@ -58,7 +58,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactsHelper RemoveContactThroughEdit(ContactData contact)
+        public ContactsHelper DeleteContactThroughEdit(ContactData contact)
         {
             manager.Navigator.GoToContactsPage();
             InitContactEdit(contact.Id);
@@ -98,6 +98,43 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactsHelper RemoveContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToContactsPage();
+            SetGroupFilter(group.Id);
+            AddContactToGroupIfGroupHasNone(group, contact);
+            SelectContact(contact.Id);
+            InitRemoveContactFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+            return this;
+        }
+
+        //Check if group has contacts, then choosing which contact to add
+        public ContactsHelper AddContactToGroupIfGroupHasNone(GroupData group, ContactData contact)
+        {
+            manager.Navigator.GoToContactsPage();
+            SetGroupFilter(group.Id);
+            if (!IsElementPresent(By.Name("entry")))
+            {
+                AddContactToGroup(contact, group);
+                return this;
+            }
+            return this;
+        }
+
+        public ContactsHelper InitRemoveContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+            return this;
+        }
+
+        public ContactsHelper SetGroupFilter(string id)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByValue(id);
+            return this;
+        }
+
         public ContactsHelper SelectContact(int index)
         {
             driver.FindElement(By.XPath("//table//tr[" + (index + 2) + "]/td[1]/input")).Click();
@@ -106,7 +143,7 @@ namespace WebAddressbookTests
 
         public ContactsHelper SelectContact(string id)
         {
-            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='" + id + "']")).Click();
+            driver.FindElement(By.Id(id)).Click();
             return this;
         }
 
@@ -155,7 +192,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactsHelper RemoveContact()
+        public ContactsHelper DeleteContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             contactListCache = null;

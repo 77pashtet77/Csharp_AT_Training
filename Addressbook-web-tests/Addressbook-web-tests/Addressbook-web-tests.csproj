@@ -117,8 +117,9 @@
   <ItemGroup>
     <Compile Include="Model\AddressBookDB.cs" />
     <Compile Include="Model\GroupContactRelation.cs" />
-    <Compile Include="Tests\Contacts\AddingContactToGroupTests.cs" />
+    <Compile Include="Tests\Contacts-groups relations\AddingContactToGroupTests.cs" />
     <Compile Include="Tests\Base\AuthTestBase.cs" />
+    <Compile Include="Tests\Contacts-groups relations\RemovingContactFromGroupTests.cs" />
     <Compile Include="Tests\Contacts\ContactDetailsTests.cs" />
     <Compile Include="Tests\Contacts\ContactInformationTests.cs" />
     <Compile Include="Tests\Base\ContactTestBase.cs" />

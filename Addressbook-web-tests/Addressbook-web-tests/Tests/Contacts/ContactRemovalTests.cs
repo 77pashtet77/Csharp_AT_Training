@@ -19,7 +19,7 @@ namespace WebAddressbookTests
 
             ContactData toBeRemoved = oldContacts[0];
 
-            app.Contacts.Remove(toBeRemoved, true);
+            app.Contacts.Delete(toBeRemoved, true);
 
             //Hashing
             //Remove code below for stable tests
@@ -49,7 +49,7 @@ namespace WebAddressbookTests
 
             ContactData toBeRemoved = oldContacts[0];
 
-            app.Contacts.Remove(toBeRemoved, false);
+            app.Contacts.Delete(toBeRemoved, false);
 
             //Hashing
             //Remove code below for stable tests
@@ -70,7 +70,7 @@ namespace WebAddressbookTests
             //saving old groups list state before removal
             ContactData toBeRemoved = oldContacts[0];
 
-            app.Contacts.RemoveContactThroughEdit(toBeRemoved);
+            app.Contacts.DeleteContactThroughEdit(toBeRemoved);
 
             //Hashing
             //Remove code below for stable tests

@@ -3,30 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Google.Protobuf.WellKnownTypes;
 using NUnit.Framework;
 
 namespace WebAddressbookTests
 {
-    public class AddingContactToGroupTests : ContactTestBase
+    public class RemovingContactFromGroupTests : ContactTestBase
     {
         [Test]
-        public void AddingContactToGroupTest()
+        public void RemovingContactFromGroupTest()
         {
             app.Groups.CreateGroupIfNoneExists();
             app.Contacts.CreateContactIfNoneExists();
 
             GroupData group = GroupData.GetAll()[0];
-            List<ContactData> oldList = group.GetContacts();
-            ContactData contact = ContactData.GetAll().Except(oldList).First();
 
-            app.Contacts.AddContactToGroup(contact, group);
+            app.Contacts.AddContactToGroupIfGroupHasNone(group, ContactData.GetAll()[0]);
+
+            List<ContactData> oldList = group.GetContacts();
+            ContactData toRemove = oldList.First();
+
+            app.Contacts.RemoveContactFromGroup(toRemove, group);
 
             List<ContactData> newList = group.GetContacts();
-            oldList.Add(contact);
-            newList.Sort();
-            oldList.Sort();
 
+            oldList.RemoveAt(0);
             Assert.AreEqual(oldList, newList);
+
+            foreach (ContactData contact in newList)
+            {
+                Assert.AreNotEqual(contact.Id, toRemove.Id);
+            }
         }
     }
 }
