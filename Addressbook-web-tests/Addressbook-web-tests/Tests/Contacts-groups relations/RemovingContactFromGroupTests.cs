@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace WebAddressbookTests
 {
-    public class RemovingContactFromGroupTests : ContactTestBase
+    public class RemovingContactFromGroupTests : AuthTestBase
     {
         [Test]
         public void RemovingContactFromGroupTest()
@@ -18,10 +18,13 @@ namespace WebAddressbookTests
 
             GroupData group = GroupData.GetAll()[0];
 
-            app.Contacts.AddContactToGroupIfGroupHasNone(group, ContactData.GetAll()[0]);
+            if (group.GetContacts().Count == 0)
+            {
+                app.Contacts.AddContactToGroupIfGroupHasNone(group, ContactData.GetAll()[0]);
+            }
 
             List<ContactData> oldList = group.GetContacts();
-            ContactData toRemove = oldList.First();
+            ContactData toRemove = oldList[0];
 
             app.Contacts.RemoveContactFromGroup(toRemove, group);
 
