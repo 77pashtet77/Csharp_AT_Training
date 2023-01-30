@@ -15,13 +15,7 @@ namespace addressbook_tests_autoit
         [TestFixtureSetUp]
         public void InitApplication()
         {
-            app = new ApplicationManager();
-        }
-
-        [TestFixtureTearDown]
-        public void StopApplication() 
-        {
-            app.Stop();
+            app = ApplicationManager.GetInstance();
         }
     }
 }
