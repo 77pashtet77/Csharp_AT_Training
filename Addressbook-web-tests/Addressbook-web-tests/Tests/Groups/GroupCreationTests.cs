@@ -104,18 +104,15 @@ namespace WebAddressbookTests
             Assert.AreEqual(oldGroups, newGroups);
         }
 
-        
+        /*
         [Test]
         public void TestDbConnectivity()
         {
-            /*
             foreach (ContactData contact in GroupData.GetAll()[0].GetContacts())
             {
                 System.Console.Out.WriteLine(contact);
             }
-            */
 
-            /*
             DateTime start = DateTime.Now;
             List<GroupData> fromUi = app.Groups.GetGroupsList();
             DateTime finish = DateTime.Now;
@@ -125,8 +122,7 @@ namespace WebAddressbookTests
             List<GroupData> fromDb = GroupData.GetAll();
             finish = DateTime.Now;
             Console.WriteLine(finish.Subtract(start));
-            */
         }
-        
+        */
     }
 }
