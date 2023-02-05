@@ -25,6 +25,7 @@ namespace mantis_tests
         protected ProjectManagementHelper projects;
         protected SidebarNavigationHelper sidebar;
         protected ManagementMenuHelper managementMenu;
+        protected AdminHelper admin;
 
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
@@ -32,7 +33,7 @@ namespace mantis_tests
         private ApplicationManager()
         {
             driver = new ChromeDriver();
-            baseURL = "http://localhost/";
+            baseURL = "http://localhost/mantisbt-2.25.5";
 
             registration = new RegistrationHelper(this);
             ftp = new FtpHelper(this);
@@ -42,6 +43,7 @@ namespace mantis_tests
             projects = new ProjectManagementHelper(this);
             sidebar = new SidebarNavigationHelper(this);
             managementMenu = new ManagementMenuHelper(this);
+            admin = new AdminHelper(this, baseURL);
         }
 
         ~ApplicationManager()
@@ -62,7 +64,7 @@ namespace mantis_tests
             {
                 ApplicationManager NewInstance = new ApplicationManager();
                 app.Value = NewInstance;
-                NewInstance.driver.Url = "http://localhost/mantisbt-2.25.5/login_page.php";
+                NewInstance.driver.Url = NewInstance.baseURL + "/login_page.php";
                 NewInstance.driver.Manage().Window.Maximize();
             }
             return app.Value;
@@ -92,5 +94,7 @@ namespace mantis_tests
         { get { return sidebar; } }
         public ManagementMenuHelper ManagementMenu
         { get { return managementMenu; } }
+        public AdminHelper Admin
+        { get { return admin; } }
     }
 }
