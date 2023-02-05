@@ -46,34 +46,5 @@ namespace mantis_tests
                 return false;
             }
         }
-
-        //converting text representation of a month into a number for easier parsing
-        public string MonthConverter(string monthText)
-        {
-            Dictionary<string, string> months = new Dictionary<string, string>()
-{
-                { "January", "1"},
-                { "February", "2"},
-                { "March", "3"},
-                { "April", "4"},
-                { "May", "5"},
-                { "June", "6"},
-                { "July", "7"},
-                { "August", "8"},
-                { "September", "9"},
-                { "October", "10"},
-                { "November", "11"},
-                { "December", "12"},
-};
-            foreach (var month in months)
-            {
-                if (monthText.Contains(month.Key))
-                {
-                    string thisMonth = month.Value;
-                    monthText =  thisMonth;
-                }
-            }
-            return monthText;
-        }
     }
 }
