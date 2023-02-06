@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using SimpleBrowser.WebDriver;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 
 namespace mantis_tests
 {
@@ -23,11 +25,11 @@ namespace mantis_tests
         {
             List<AccountData> accounts = new List<AccountData>();
             IWebDriver driver = OpenAppAndLogin();
-            driver.Url = baseUrl + "/ manage_user_page.php";
+            driver.Url = baseUrl + "/manage_user_page.php";
             IList<IWebElement> rows = driver.FindElements(By.XPath(@"//div[@id='main-container']/div[2]/div[2]/div/div/div[4]/div[2]/div[2]/div/table/tbody/tr"));
             foreach (IWebElement row in rows)
             {
-                IWebElement link = row.FindElement(By.XPath(@"/td[1]/a"));
+                IWebElement link = row.FindElement(By.XPath(@"td[1]/a"));
                 string name = link.Text;
                 string href = link.GetAttribute("href");
                 Match m = Regex.Match(href, @"\d+$");
@@ -53,11 +55,12 @@ namespace mantis_tests
 
         private IWebDriver OpenAppAndLogin()
         {
-            IWebDriver driver = new SimpleBrowserDriver();
+            IWebDriver driver = new ChromeDriver();
+            driver.Manage().Window.Maximize();
             driver.Url = baseUrl + "/login_page.php";
-            Type(By.Id("username"), "administrator");
+            driver.FindElement(By.Id("username")).SendKeys("administrator");
             driver.FindElement(By.XPath(@"//input[@type='submit']")).Click();
-            Type(By.Id("password"), "root");
+            driver.FindElement(By.Id("password")).SendKeys("root");
             driver.FindElement(By.XPath(@"//input[@type='submit']")).Click();
             return driver;
         }
