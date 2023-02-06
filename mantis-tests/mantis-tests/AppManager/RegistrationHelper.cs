@@ -25,6 +25,7 @@ namespace mantis_tests
             String url = GetConfirmationUrl(account);
             FillPasswordForm(url, account);
             SubmitPasswordForm();
+            System.Threading.Thread.Sleep(2000);
         }
 
         public string GetConfirmationUrl(AccountData account)

@@ -40,6 +40,8 @@ namespace mantis_tests
             app.James.Add(account);
 
             app.Registration.Register(account);
+
+            app.Auth.Login(account);
         }
 
         [OneTimeTearDown]

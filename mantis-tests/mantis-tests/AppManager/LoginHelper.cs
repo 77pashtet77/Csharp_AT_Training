@@ -14,7 +14,12 @@ namespace WebAddressbookTests
 {
     public class LoginHelper : HelperBase
     {
-        public LoginHelper(ApplicationManager manager) : base(manager) { }
+        private string baseUrl;
+
+        public LoginHelper(ApplicationManager manager, String baseUrl) : base(manager) 
+        {
+            this.baseUrl = baseUrl;
+        }
 
         public LoginHelper Login(AccountData account)
         {
@@ -28,6 +33,7 @@ namespace WebAddressbookTests
                 Logout();
                 return this;
             }
+            driver.Url = baseUrl + "/login_page.php";
             Type(By.Id("username"), account.Name);
             driver.FindElement(By.XPath(@"//input[@type='submit']")).Click();
             Type(By.Id("password"), account.Password);

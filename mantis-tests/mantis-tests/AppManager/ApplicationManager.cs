@@ -39,7 +39,7 @@ namespace mantis_tests
             ftp = new FtpHelper(this);
             james = new JamesHelper(this);
             mail = new MailHelper(this);
-            auth = new LoginHelper(this);
+            auth = new LoginHelper(this, baseURL);
             projects = new ProjectManagementHelper(this);
             sidebar = new SidebarNavigationHelper(this);
             managementMenu = new ManagementMenuHelper(this);
