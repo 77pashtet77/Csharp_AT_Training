@@ -26,7 +26,7 @@ namespace mantis_tests
         protected SidebarNavigationHelper sidebar;
         protected ManagementMenuHelper managementMenu;
         protected AdminHelper admin;
-
+        private APIHelper api;
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
@@ -44,6 +44,7 @@ namespace mantis_tests
             sidebar = new SidebarNavigationHelper(this);
             managementMenu = new ManagementMenuHelper(this);
             admin = new AdminHelper(this, baseURL);
+            api = new APIHelper(this);
         }
 
         ~ApplicationManager()
@@ -96,5 +97,7 @@ namespace mantis_tests
         { get { return managementMenu; } }
         public AdminHelper Admin
         { get { return admin; } }
+        public APIHelper API
+        { get { return api; } }
     }
 }
