@@ -31,17 +31,24 @@ namespace mantis_tests
             manager.ManagementMenu.ManageProjects();
             SelectExistingProject(index);
             InitDeleteProject();
+            ConfirmDeleteProject();
             return this;
         }
 
         public ProjectManagementHelper SelectExistingProject(int index)
         {
-            driver.FindElement(By.XPath(@"//div[@id='main-container']/div[2]/div[2]/div/div/div[2]/div[2]/div/div[2]/table/tbody/tr[" + (index + 1) + "]")).Click();
+            driver.FindElement(By.XPath(@"//div[@id='main-container']/div[2]/div[2]/div/div/div[2]/div[2]/div/div[2]/table/tbody/tr[" + (index + 1) + "]/td/a")).Click();
             return this;
         }
         public ProjectManagementHelper InitDeleteProject()
         {
             driver.FindElement(By.XPath("//input[@value='Delete Project']")).Click();
+            return this;
+        }
+
+        private ProjectManagementHelper ConfirmDeleteProject()
+        {
+            driver.FindElement(By.XPath(@"//input[@type='submit']")).Click();
             return this;
         }
 

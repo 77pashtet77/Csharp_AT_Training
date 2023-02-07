@@ -13,6 +13,17 @@ namespace mantis_tests
         {
         }
 
+        public bool IsProjectCreated()
+        {
+            AccountData account = new AccountData("administrator", "root");
+            List<ProjectData> projects = manager.API.GetProjectList(account);
+            if (projects.Count == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public SidebarNavigationHelper GoToViewTab()
         {
             driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[1]")).Click();
@@ -27,31 +38,60 @@ namespace mantis_tests
 
         public SidebarNavigationHelper GoToTaskCreationTab()
         {
-            driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[3]")).Click();
+            if (IsProjectCreated())
+            {
+                driver.Navigate().Refresh();
+                driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[3]")).Click();
+                return this;
+            }
             return this;
         }
 
         public SidebarNavigationHelper GoToJournalTab()
         {
-            driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[4]")).Click();
+            if (IsProjectCreated()) 
+            {
+                driver.Navigate().Refresh();
+                driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[4]")).Click();
+                return this;
+            }
+            driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[3]")).Click();
             return this;
         }
 
         public SidebarNavigationHelper GoToRoadmapTab()
         {
-            driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[5]")).Click();
+            if (IsProjectCreated())
+            {
+                driver.Navigate().Refresh();
+                driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[5]")).Click();
+                return this;
+            }
+            driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[4]")).Click();
             return this;
         }
 
         public SidebarNavigationHelper GoToSummaryTab()
         {
-            driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[6]")).Click();
+            if (IsProjectCreated())
+            {
+                driver.Navigate().Refresh();
+                driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[6]")).Click();
+                return this;
+            }
+            driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[5]")).Click();
             return this;
         }
 
         public SidebarNavigationHelper GoToManagementTab()
         {
-            driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[7]")).Click();
+            if (IsProjectCreated())
+            {
+                driver.Navigate().Refresh();
+                driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[7]")).Click();
+                return this;
+            }
+            driver.FindElement(By.XPath("//div[@id='sidebar']/ul/li[6]")).Click();
             return this;
         }
     }
