@@ -1,0 +1,20 @@
+1. Download Zip archive with web addressbook app (addressbook.zip)
+2. Unpack archive into */xampp/htdocs
+3. Run XAMPP panel
+4. Press Admin button for MySql
+5. Press create DB in the left toolbar
+6. Enter name "addressbook"
+7. Press create
+8. Select created db in the left toolbar
+9. Go to import tab at the top toolbar
+10. Press the browse button 
+11. select */xampp/htdocs/addressbook/addressbook.sql
+12. Press open
+13. Scroll the page to the bottom, press next - successful import message should appear
+14. Select addressbook db in the left toolbar - if you see DB tables list, import has been successful
+15. Now you can open app in browser by going to localhost/addressbook 
+16. Admin credentials: 
+login: admin
+password: secret
+17. If admin login was correct and you logged in successfully - then everything was installed properly
+
